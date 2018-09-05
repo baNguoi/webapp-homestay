@@ -1,5 +1,10 @@
-package com.banguoi;
+package com.banguoi.configuration;
 
+import com.banguoi.formatter.RoleFormatter;
+import com.banguoi.service.roles.RoleService;
+import com.banguoi.service.roles.RoleServiceImpl;
+import com.banguoi.service.user.UserService;
+import com.banguoi.service.user.UserServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +14,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -36,6 +44,8 @@ import java.util.Properties;
 @PropertySource("classpath:databaseconfig.properties")
 @EnableTransactionManagement
 @ComponentScan("com.banguoi")
+@EnableJpaRepositories("com.banguoi.repository")
+@EnableSpringDataWebSupport
 public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -53,6 +63,21 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
     @Value("${jdbc.password}")
     private String password;
+
+    @Bean
+    public UserService userService() {
+        return new UserServiceImpl();
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new RoleFormatter(applicationContext.getBean(RoleService.class)));
+    }
+
+    @Bean
+    public RoleService roleService() {
+        return new RoleServiceImpl();
+    }
 
     @Bean
     public ViewResolver viewResolver() {

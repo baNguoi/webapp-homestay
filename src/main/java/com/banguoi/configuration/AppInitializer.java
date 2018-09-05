@@ -1,4 +1,4 @@
-package com.banguoi;
+package com.banguoi.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
