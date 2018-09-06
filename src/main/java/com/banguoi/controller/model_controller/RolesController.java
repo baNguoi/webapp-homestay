@@ -1,4 +1,4 @@
-package com.banguoi.controller;
+package com.banguoi.controller.model_controller;
 
 import com.banguoi.model.Role;
 import com.banguoi.service.roles.RoleService;
