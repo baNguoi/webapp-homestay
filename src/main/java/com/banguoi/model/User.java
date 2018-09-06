@@ -151,7 +151,7 @@ public class User implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "address", "address.empty");
 
         String phoneNumber = user.getPhoneNumber();
-        ValidationUtils.rejectIfEmpty(errors, "phoneNumber", "phoneNumber.empty");
+//        ValidationUtils.rejectIfEmpty(errors, "phoneNumber", "phoneNumber.empty");
         if (phoneNumber.length() > 11 || phoneNumber.length() < 10) {
             errors.rejectValue("phoneNumber", "phone.length");
         }
