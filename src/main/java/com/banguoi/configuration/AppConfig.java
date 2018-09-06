@@ -152,7 +152,6 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/resource/**").addResourceLocations("/resource/");
+        registry.addResourceHandler("/resource/**").addResourceLocations("/resource/");
     }
 }
