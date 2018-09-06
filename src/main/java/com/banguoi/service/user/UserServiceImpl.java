@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService {
     private RolesRepository roleRepository;
 
     @Override
-    public User findUserByName(String name) {
-        return userRepository.findUserByName(name);
+    public Iterable<User> findUserByNameContaining(String name) {
+        return userRepository.findUserByNameContaining(name);
     }
 
     @Override
