@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User list</title>
+</head>
+<body>
+<h1>User list</h1>
+<p>
+    <a href="/users/create">Create new account</a>
+</p>
+<form>
+    Search user by name:
+    <input type="text" name="s"/>
+    <input type="submit" value="Search"/>
+</form>
+<table border="1">
+    <tr>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Password</td>
+        <td>Address</td>
+        <td>PhoneNumber</td>
+        <td>Age</td>
+        <td>Role</td>
+        <td>Edit</td>
+        <td>Delete</td>
+        <td>Views</td>
+    </tr>
+    <th:block th:each="user : ${users}">
+        <tr>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.address}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.age}"></td>
+            <td th:text="${user.role.roles}"></td>
+            <td><a th:href="@{/users/update/__${user.id}__}">edit</a></td>
+            <td><a th:href="@{/users/delete/__${user.id}__}">delete</a></td>
+            <td><a th:href="@{/users/detail/__${user.id}__}">detail</a></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>
