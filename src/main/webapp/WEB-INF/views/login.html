@@ -49,6 +49,10 @@
                 <input type="checkbox" class="form-check-input">
                 <label class="form-check-label">Check me out</label>
             </div>
+            <div th:if="${param.error}">
+                <p style="color: red">UserName or PassWord is wrong. Please
+                    check again!</p>
+            </div>
             <button type="submit" class="btn btn-primary bton-login">Login</button>
         </form>
         <p></p>
