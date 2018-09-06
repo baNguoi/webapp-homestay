@@ -1,4 +1,4 @@
-package com.banguoi.controller;
+package com.banguoi.controller.security_controller;
 
 import com.banguoi.model.User;
 import com.banguoi.service.user.UserService;
@@ -29,27 +29,27 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        Iterable<User> userss = userService.findAll();
-        for (User u : userss) {
+        Iterable<User> us = userService.findAll();
+        for (User u : us) {
             users.add(u);
         }
 
-        String name = authentication.getName();
+        String email = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        Optional<User> optionalUser = users.stream().filter(u -> u.index(name, password)).findFirst();
+        Optional<User> optionalUser = users.stream().filter(u -> u.index(email, password)).findFirst();
 
         if (!optionalUser.isPresent()) {
-            logger.error("Authentication failed for user = " + name);
-            throw new BadCredentialsException("Authentication failed for user = " + name);
+            logger.error("Authentication failed for user = " + email);
+            throw new BadCredentialsException("Authentication failed for user = " + email);
         }
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(optionalUser.get().getRole().getRoles()));
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(name, password,
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(email, password,
                 grantedAuthorities);
 
-        logger.info("Succesful Authentication with user = " + name);
+        logger.info("Succesful Authentication with user = " + email);
         return auth;
     }
 

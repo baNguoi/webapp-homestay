@@ -1,4 +1,4 @@
-package com.banguoi.controller;
+package com.banguoi.controller.model_controller;
 
 import com.banguoi.model.Role;
 import com.banguoi.model.User;
@@ -6,6 +6,7 @@ import com.banguoi.service.roles.RoleService;
 import com.banguoi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,7 +30,7 @@ public class UserController {
     public ModelAndView listUser(@RequestParam("s")Optional<String> s) {
         Iterable<User> users;
         if (s.isPresent()) {
-            users = (Iterable<User>) userService.findUserByName(s.get());
+            users = userService.findUserByNameContaining(s.get());
         } else {
             users = userService.findAll();
         }
@@ -50,7 +51,13 @@ public class UserController {
     }
 
     @PostMapping("/users/create")
-    public ModelAndView createUser(@ModelAttribute("user") User user) {
+    public ModelAndView createUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+        new User().validate(user, bindingResult);
+
+        if (bindingResult.hasFieldErrors()) {
+            return new ModelAndView("/user/create");
+        }
+
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("/user/create");
         modelAndView.addObject("user", user);
@@ -73,7 +80,13 @@ public class UserController {
     }
 
     @PostMapping("/users/update")
-    public ModelAndView updateUser(@ModelAttribute("user") User user) {
+    public ModelAndView updateUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+        new User().validate(user, bindingResult);
+
+        if (bindingResult.hasFieldErrors()) {
+            return new ModelAndView("/user/edit");
+        }
+
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("/user/edit");
         modelAndView.addObject("user", user);
