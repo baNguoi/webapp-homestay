@@ -31,27 +31,26 @@ ul li {
 .note {
     padding-top: 30px;
     font-weight: initial;
-    font-size: 20px;
+    font-size: 23px;
 }
 
 /*Menu Trang Web*/
 .MenuItems {
-    width: 100px;
-    height: 20px;
+    width: 120px;
+    height: 25px;
     border: hidden;
     float: left;
     text-align: center;
     position: relative;
     padding: 2px 0;
-    margin-top: 10px;
-    margin-left: 40px;
+    margin-top: 30px;
+    margin-left: 25px;
     letter-spacing: 2px;
-    font-size: 12px;
-    line-height: 10px;
+    font-size: 14px;
+    line-height: 12px;
     font-weight: 900;
-    color: white;
+    color: black;
     display: inline-block;
-
 }
 
 .MenuItems::before {
@@ -92,16 +91,19 @@ ul li {
     margin-top: -10px;
     margin-left: -10px;
     margin-right: -10px;
-    background-color: gray;
+    background-color: white;
     z-index: 10;
 }
 
 #logoProduct {
     margin-left: 60px;
     margin-top: 20px;
-    height: 20px;
+    height: 100px;
+    width: 100px;
 }
 
 #menu {
     margin-top: 30px;
 }
+
+#logo
