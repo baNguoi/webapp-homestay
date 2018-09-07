@@ -1,6 +1,7 @@
 package com.banguoi.service.product;
 
 import com.banguoi.model.Product;
+import com.banguoi.model.User;
 import com.banguoi.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> findAll(Pageable pageable) {
         return productRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Product> findProductsByUser(User user, Pageable pageable) {
+        return productRepository.findProductsByUser(user, pageable);
     }
 
     @Override
