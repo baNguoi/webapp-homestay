@@ -1,6 +1,7 @@
 package com.banguoi.service.product;
 
 import com.banguoi.model.Product;
+import com.banguoi.model.Province;
 import com.banguoi.model.User;
 import com.banguoi.repository.ProductRepository;
 import com.banguoi.service.user.UserService;
@@ -41,5 +42,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void remove(Long id) {
         productRepository.delete(id);
+    }
+
+    @Override
+    public Page<Product> findAllByProvince(Province province, Pageable pageable) {
+        return productRepository.findAllByProvince(province,pageable);
     }
 }
