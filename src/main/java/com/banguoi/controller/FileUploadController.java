@@ -1,6 +1,8 @@
 package com.banguoi.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,9 @@ import java.nio.file.Paths;
 @Controller
 public class FileUploadController {
 
+    @Autowired
+    private Environment environment;
+
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
@@ -24,16 +29,16 @@ public class FileUploadController {
         return multipartResolver;
     }
 
-    private static String UPLOADED_FOLDER = "C:\\Users\\syphan\\IdeaProjects\\webapp-homestay\\src\\main\\webapp\\resource\\images\\";
 
     @GetMapping("/images")
     public String index() {
         return "index";
     }
 
-
     @PostMapping("/images")
     public String singleFileUpload(@RequestParam("file") MultipartFile file, Model model) {
+        String UPLOADED_FOLDER = environment.getProperty("url.Image");
+
         if (file.isEmpty()) {
             model.addAttribute("message", "Please select a file to upload");
         }
