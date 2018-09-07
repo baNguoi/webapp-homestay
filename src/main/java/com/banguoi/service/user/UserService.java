@@ -8,6 +8,8 @@ public interface UserService {
 
     Iterable<User> findAll();
 
+    User findUserByEmail(String email);
+
     User findById(Long id);
 
     void save(User user);
