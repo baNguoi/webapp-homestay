@@ -7,7 +7,7 @@ public interface ImageService {
 
     Iterable<Image> findAll();
 
-    Iterable<Image> findImageByProduct(Product product);
+    Iterable<Image> findAllByProduct(Product product);
 
     Image findById(Long id);
 
