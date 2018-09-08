@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -34,7 +34,8 @@
                     <a class="nav-link" href="/users/create">
                         <div class="MenuItems">Sign up</div>
                     </a>
-                </li><li class="nav-item">
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/login">
                         <div class="MenuItems">Login</div>
                     </a>
@@ -51,7 +52,7 @@
     </div>
     <div class="row">
         <div class="col-3">
-            <button class="btn btn-secondary" >Ha Noi</button>
+            <button class="btn btn-secondary">Ha Noi</button>
         </div>
     </div>
     <div class="row">
@@ -75,6 +76,24 @@
                 <span class="carousel-control-next-icon"></span>
             </a>
         </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <th:block th:each="product:${products}">
+            <div class="col-3">
+                <div class="card border-success mb-3" style="max-width: 18rem;">
+                    <div th:each="im:${product.images}">
+                        <img class="card-img-top" th:src="@{/resource/image/__${im.name}__}" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-success">
+                        <h5 class="card-title">Success card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                    </div>
+                </div>
+            </div>
+        </th:block>
     </div>
 </div>
 </body>
