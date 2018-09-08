@@ -14,7 +14,6 @@ import com.banguoi.service.user.UserServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.MessageSource;
@@ -61,16 +60,8 @@ import java.util.Properties;
 public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
-    @Autowired private Environment environment;
-
-////    @Value("${jdbc.url}")
-//    private String jdbc;
-//
-////    @Value("${jdbc.username}")
-//    private String username;
-//
-////    @Value("${jdbc.password}")
-//    private String password;
+    @Autowired
+    private Environment environment;
 
     @Bean
     public UserService userService() {

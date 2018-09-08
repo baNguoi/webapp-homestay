@@ -1,6 +1,7 @@
 package com.banguoi.service.image;
 
 import com.banguoi.model.Image;
+import com.banguoi.model.Product;
 import com.banguoi.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +13,11 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Iterable<Image> findAll() {
         return imageRepository.findAll();
+    }
+
+    @Override
+    public Iterable<Image> findImageByProduct(Product product) {
+        return imageRepository.findImageByProduct(product);
     }
 
     @Override

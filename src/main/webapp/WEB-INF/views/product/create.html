@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new product</title>
+</head>
+<body>
+<h1>Create new product for user</h1>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form action="#" th:action="@{/products/create}" th:object="${product}" method="post">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>Province:</td>
+            <td>
+                <select th:field="*{province}">
+                    <option th:each="p:${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Bedroom:</td>
+            <td><input type="text" th:field="*{bedroom}"/></td>
+        </tr>
+        <tr>
+            <td>Guests:</td>
+            <td><input type="text" th:field="*{guests}"/></td>
+        </tr>
+        <tr>
+            <td>Beds:</td>
+            <td><input type="text" th:field="*{beds}"/></td>
+        </tr>
+        <tr>
+            <td>Bath:</td>
+            <td><input type="text" th:field="*{bath}"/></td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><input type="text" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" th:field="*{price}"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="create new product"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
