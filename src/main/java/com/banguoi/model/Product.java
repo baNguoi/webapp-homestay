@@ -12,7 +12,6 @@ public class Product {
     private Long id;
 
     private String name;
-    private String address;
     private int bedroom;
     private int guests;
     private int beds;
@@ -48,14 +47,6 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public int getBedroom() {

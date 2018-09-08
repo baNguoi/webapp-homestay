@@ -6,6 +6,8 @@ public interface UserService {
 
     Iterable<User> findUserByNameContaining(String name);
 
+    User findUserByEmail(String email);
+
     Iterable<User> findAll();
 
     User findById(Long id);

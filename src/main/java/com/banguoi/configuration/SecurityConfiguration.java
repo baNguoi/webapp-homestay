@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().csrf()
                 .and().exceptionHandling().accessDeniedPage("/Access_Denied")
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-        http.exceptionHandling().accessDeniedPage("/403");
+        http.exceptionHandling().accessDeniedPage("/Access_Denied");
     }
 
     @Override
