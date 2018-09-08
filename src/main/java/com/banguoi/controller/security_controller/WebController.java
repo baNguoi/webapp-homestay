@@ -1,21 +1,31 @@
 package com.banguoi.controller.security_controller;
 
+import com.banguoi.model.Product;
 import com.banguoi.model.User;
+import com.banguoi.service.product.ProductService;
 import com.banguoi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@Transactional
 public class WebController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ProductService productService;
+
 
     private String getPrincipal() {
         String email = null;
@@ -30,8 +40,16 @@ public class WebController {
     }
 
     @RequestMapping(value = {"/", "home"})
-    public String home() {
-        return "/home";
+    public ModelAndView home(Pageable pageable) {
+        Page<Product> products = productService.findAll(pageable);
+        ModelAndView modelAndView = new ModelAndView("/home");
+
+        for (Product p : products) {
+            System.out.println(p.getImages().size());
+        }
+
+        modelAndView.addObject("products", products);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/user")
