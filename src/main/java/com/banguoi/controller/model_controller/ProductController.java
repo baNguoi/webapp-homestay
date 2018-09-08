@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -67,6 +68,32 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView("/product/create");
         modelAndView.addObject("product", product);
         modelAndView.addObject("message", "Product created compliment");
+        return modelAndView;
+    }
+
+    @GetMapping("/products/detail/{id}")
+    public ModelAndView detailProduct(@PathVariable("id") Long id) {
+        Product product = productService.findById(id);
+
+        if (product == null) {
+            return new ModelAndView("/accessDenied");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("/product/detail");
+        modelAndView.addObject("product", product);
+        return modelAndView;
+    }
+
+    @GetMapping("/products/uploadImage/{id}")
+    public ModelAndView showFormUpload(@PathVariable("id") Long id) {
+        Product product = productService.findById(id);
+
+        if (product == null) {
+            return new ModelAndView("/accessDenied");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("/image/upload");
+        modelAndView.addObject("product", product);
         return modelAndView;
     }
 }

@@ -6,7 +6,9 @@
 </head>
 <body>
 <h1>Upload</h1>
-<form method="post" enctype="multipart/form-data">
+<form th:action="@{/products/uploadImage((${_csrf.parameterName})=(${_csrf.token}))}" method="post"
+      th:object="${product}" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
     <table>
         <tr>
             <td>Image Upload:</td>
@@ -15,7 +17,8 @@
                 (2) : <input type="file" name="file"/><br/>
                 (3) : <input type="file" name="file"/><br/>
                 (4) : <input type="file" name="file"/><br/>
-                (5) : <input type="file" name="file"/>
+                (5) : <input type="file" name="file"/><br/>
+                (6) : <input type="file" name="file"/>
             </td>
         </tr>
         <tr>

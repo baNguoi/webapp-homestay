@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product blog</title>
+</head>
+<body>
+<h1>Product blog</h1>
+<p>
+    <a href="/products">Bach to products list</a>
+</p>
+<table border="1">
+    <tr>
+        <td>Name:</td>
+        <td th:text="${product.name}"></td>
+    </tr>
+    <tr>
+        <td>Province:</td>
+        <td th:text="${product.province.name}"></td>
+    </tr>
+    <tr>
+        <td>Bedroom:</td>
+        <td th:text="${product.bedroom}"></td>
+    </tr>
+    <tr>
+        <td>Guests:</td>
+        <td th:text="${product.guests}"></td>
+    </tr>
+    <tr>
+        <td>Beds:</td>
+        <td th:text="${product.beds}"></td>
+    </tr>
+    <tr>
+        <td>Bath:</td>
+        <td th:text="${product.bath}"></td>
+    </tr>
+    <tr>
+        <td>Description:</td>
+        <td th:text="${product.description}"></td>
+    </tr>
+    <tr>
+        <td>Price:</td>
+        <td th:text="${product.price}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -5,5 +5,5 @@ import com.banguoi.model.Product;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ImageRepository extends CrudRepository<Image, Long> {
-    Iterable<Image> findImageByProduct(Product product);
+    Iterable<Image> findAllByProduct(Product product);
 }

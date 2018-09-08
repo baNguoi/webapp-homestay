@@ -16,8 +16,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Iterable<Image> findImageByProduct(Product product) {
-        return imageRepository.findImageByProduct(product);
+    public Iterable<Image> findAllByProduct(Product product) {
+        return imageRepository.findAllByProduct(product);
     }
 
     @Override
