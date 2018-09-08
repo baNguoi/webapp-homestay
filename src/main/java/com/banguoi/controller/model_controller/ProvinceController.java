@@ -14,7 +14,6 @@ import com.banguoi.service.product.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class ProvinceController {
@@ -25,7 +24,7 @@ public class ProvinceController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/products/detail/{id}")
+    @GetMapping("/provinces/view/{id}")
     public ModelAndView viewProvince(@PathVariable("id") Long id, Pageable pageable) {
         Province province = provinceService.findById(id);
         if (province == null) {
