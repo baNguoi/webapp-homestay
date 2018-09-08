@@ -19,4 +19,10 @@ public interface ProductService {
     void remove(Long id);
 
     Page<Product> findAllByProvince(Province province, Pageable pageable);
+
+    Page<Product> findAllByName(String name, Pageable pageable);
+
+    Page<Product> findAllByBedroom(int bedroom, Pageable pageable);
+
+    Page<Product> findAllByPrice(double price, Pageable pageable);
 }

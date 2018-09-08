@@ -46,6 +46,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findAllByProvince(Province province, Pageable pageable) {
-        return productRepository.findAllByProvince(province,pageable);
+        return productRepository.findAllByProvince(province, pageable);
+    }
+
+    @Override
+    public Page<Product> findAllByName(String name, Pageable pageable) {
+        return productRepository.findAllByName(name, pageable);
+    }
+
+    @Override
+    public Page<Product> findAllByBedroom(int bedroom, Pageable pageable) {
+        return productRepository.findAllByBedroom(bedroom, pageable);
+    }
+
+    @Override
+    public Page<Product> findAllByPrice(double price, Pageable pageable) {
+        return productRepository.findAllByPrice(price, pageable);
     }
 }
