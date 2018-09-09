@@ -1,5 +1,6 @@
 package com.banguoi.controller.security_controller;
 
+import com.banguoi.model.Image;
 import com.banguoi.model.Product;
 import com.banguoi.model.User;
 import com.banguoi.service.product.ProductService;
@@ -45,7 +46,8 @@ public class WebController {
         ModelAndView modelAndView = new ModelAndView("/home");
 
         for (Product p : products) {
-            System.out.println(p.getImages().size());
+            for (Image i : p.getImages()) {
+            }
         }
 
         modelAndView.addObject("products", products);
