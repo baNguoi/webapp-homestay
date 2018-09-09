@@ -1,16 +1,21 @@
 package com.banguoi.controller.model_controller;
 
+import com.banguoi.model.Product;
 import com.banguoi.model.Role;
 import com.banguoi.model.User;
+import com.banguoi.service.product.ProductService;
 import com.banguoi.service.roles.RoleService;
 import com.banguoi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -21,109 +26,35 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private ProductService productService;
+
+    private User getPrincipal() {
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+
+        User user = userService.findUserByEmail(userName);
+        return user;
+    }
+
     @ModelAttribute("roles")
     public Iterable<Role> listRoles() {
         return roleService.findAll();
     }
 
-    @GetMapping("/users")
-    public ModelAndView listUser(@RequestParam("s")Optional<String> s) {
-        Iterable<User> users;
-        if (s.isPresent()) {
-            users = userService.findUserByNameContaining(s.get());
-        } else {
-            users = userService.findAll();
-        }
+    @RequestMapping(value = "/user/manager", method = RequestMethod.GET)
+    public ModelAndView listPostHomestay(Pageable pageable) {
+        Page<Product> products = productService.findProductsByUser(getPrincipal(), pageable);
 
-        ModelAndView modelAndView = new ModelAndView("user/list");
-        modelAndView.addObject("users", users);
-        return modelAndView;
-    }
-
-    @GetMapping("/users/create")
-    public ModelAndView showCreateForm() {
-
-        User user = new User();
-
-        ModelAndView modelAndView = new ModelAndView("/user/create");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
-
-    @PostMapping("/users/create")
-    public ModelAndView createUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        new User().validate(user, bindingResult);
-
-        if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("/user/create");
-        }
-
-        userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("/user/create");
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "User created compliment");
-
-        return modelAndView;
-    }
-
-    @GetMapping("/users/update/{id}")
-    public ModelAndView showUpdateForm(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-
-        if (user == null) {
-            return new ModelAndView("/error.404");
-        }
-
-        ModelAndView modelAndView = new ModelAndView("/user/edit");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
-
-    @PostMapping("/users/update")
-    public ModelAndView updateUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        new User().validate(user, bindingResult);
-
-        if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("/user/edit");
-        }
-
-        userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("/user/edit");
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "User updated successfully");
-        return modelAndView;
-    }
-
-    @GetMapping("/users/delete/{id}")
-    public ModelAndView showDeleteForm(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-
-        if (user == null) {
-            return new ModelAndView("/error.404");
-        }
-
-        ModelAndView modelAndView = new ModelAndView("/user/delete");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
-
-    @PostMapping("/users/delete")
-    public String deleteUser(@ModelAttribute("user") User user) {
-        userService.remove(user.getId());
-
-        return "redirect:/users";
-    }
-
-    @GetMapping("/users/detail/{id}")
-    public ModelAndView detailUser(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-
-        if (user == null) {
-            return new ModelAndView("/error.404");
-        }
-
-        ModelAndView modelAndView = new ModelAndView("/user/detail");
-        modelAndView.addObject("user", user);
+        ModelAndView modelAndView = new ModelAndView("/homestay/list");
+        modelAndView.addObject("products", products);
+        modelAndView.addObject("user", getPrincipal());
         return modelAndView;
     }
 }
