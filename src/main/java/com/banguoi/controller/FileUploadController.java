@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +19,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Controller
+@Transactional
 public class FileUploadController {
 
     @Autowired
@@ -42,27 +45,41 @@ public class FileUploadController {
     public String singleFileUpload(@RequestParam("file") MultipartFile[] files,@RequestParam("id") Long id, Model model) {
         String UPLOADED_FOLDER = environment.getProperty("url.Image");
 
+        Product product = productService.findById(id);
+        List<Image> images = product.getImages();
+
+        String nameProduct = product.getName();
+        nameProduct = nameProduct.replaceAll("\\s+", "");
+
         for (MultipartFile file : files) {
             if (file.isEmpty()) {
                 continue;
             }
 
-            Product product = productService.findById(id);
-
+            Image image = new Image();
             int idA = 1;
-            Iterable<Image> images = imageService.findAllByProduct(product);
-            for (Image im : images ) {
-                idA++;
+
+            if (images.size() > 0) {
+                for (Image i : images) {
+                    if (i.getName().equals(nameProduct + "(" + idA + ")" + ".jpg")) {
+                        idA++;
+                    } else {
+                        image.setName(nameProduct + "(" + idA + ")" + ".jpg");
+                        break;
+                    }
+                }
+            } else {
+                image.setName(nameProduct + "(" + idA + ")" + ".jpg");
             }
 
-            Image image = new Image();
-            image.setName(product.getName() + "(" + idA + ")" + ".jpg");
-            image.setProduct(product);
+            if (image.getName() == null) {
+                image.setName(nameProduct + "(" + idA + ")" + ".jpg");
+            }
 
+            image.setProduct(product);
             imageService.save(image);
 
-            System.out.println(image.getName());
-            System.out.println(image.getProduct().getName());
+            images.add(image);
 
             try {
                 byte[] bytes = file.getBytes();
@@ -75,6 +92,8 @@ public class FileUploadController {
                 e.printStackTrace();
             }
         }
+
+        product.setImages(images);
         return "/image/uploadStatus";
     }
 }
