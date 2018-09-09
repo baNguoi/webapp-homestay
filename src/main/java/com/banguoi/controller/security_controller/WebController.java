@@ -50,6 +50,8 @@ public class WebController {
             }
         }
 
+        modelAndView.addObject("carousel", "carouselExampleIndicators");
+        modelAndView.addObject("id", "#");
         modelAndView.addObject("products", products);
         return modelAndView;
     }
