@@ -46,6 +46,7 @@ public class WebController {
         products = productService.findProductsByUser(user, pageable);
         ModelAndView modelAndView = new ModelAndView("/userPage");
         modelAndView.addObject("products", products);
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 
