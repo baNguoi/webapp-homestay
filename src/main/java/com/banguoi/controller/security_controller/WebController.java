@@ -2,8 +2,10 @@ package com.banguoi.controller.security_controller;
 
 import com.banguoi.model.Image;
 import com.banguoi.model.Product;
+import com.banguoi.model.Province;
 import com.banguoi.model.User;
 import com.banguoi.service.product.ProductService;
+import com.banguoi.service.province.ProvinceService;
 import com.banguoi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,9 +15,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
 @Transactional
@@ -26,6 +32,14 @@ public class WebController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProvinceService provinceService;
+
+    @ModelAttribute("provinces")
+    public Iterable<Province> findAllProvince() {
+        return provinceService.findAll();
+    }
 
 
     private String getPrincipal() {
@@ -41,14 +55,21 @@ public class WebController {
     }
 
     @RequestMapping(value = {"/", "home"})
-    public ModelAndView home(Pageable pageable) {
-        Page<Product> products = productService.findAll(pageable);
-        ModelAndView modelAndView = new ModelAndView("/home");
+    public ModelAndView home(@RequestParam("product") Optional<String> product, Pageable pageable) {
+        Page<Product> products;
+
+        if (product.isPresent()) {
+            products = productService.findAllByNameContaining(product.get(), pageable);
+        } else {
+            products = productService.findAll(pageable);
+        }
 
         for (Product p : products) {
             for (Image i : p.getImages()) {
             }
         }
+
+        ModelAndView modelAndView = new ModelAndView("/home");
 
         modelAndView.addObject("carousel", "carouselExampleIndicators");
         modelAndView.addObject("id", "#");
