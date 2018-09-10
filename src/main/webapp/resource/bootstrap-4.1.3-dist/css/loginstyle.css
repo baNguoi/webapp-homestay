@@ -21,8 +21,7 @@ a {
     text-align: center;
     position: relative;
     padding: 2px 0;
-    margin-top: 30px;
-    margin-left: 25px;
+    margin-top: 5px;
     letter-spacing: 2px;
     font-size: 14px;
     line-height: 12px;
@@ -77,30 +76,3 @@ a {
     height: 72px;
     /*background-image: url("/resource/image/hanoi-attractions.jpg");*/
 }
-
-.HaNoi {
-    background-color: transparent !important;
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px !important;
-    float: left !important;
-    margin-bottom: 4px !important;
-    text-align: left !important;
-    width: 100% !important;
-    border-width: 1px !important;
-    border-style: solid !important;
-    border-color: rgba(0, 0, 0, 0.1) !important;
-    border-image: initial !important;
-    border-radius: 3px !important;
-    padding: 0px !important;
-    overflow: hidden !important;
-}
-
-.Hanoi1 {
-    display: table !important;
-    position: relative !important;
-}
-
-.text-city1 {
-    display: table-cell !important;
-    vertical-align: middle !important;
-}
-
