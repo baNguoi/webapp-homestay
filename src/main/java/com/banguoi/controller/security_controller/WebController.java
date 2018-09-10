@@ -55,26 +55,25 @@ public class WebController {
     }
 
     @RequestMapping(value = {"/", "home"})
-    public ModelAndView home(@RequestParam("product") Optional<String> product, Pageable pageable) {
+    public String home(@RequestParam("product") Optional<String> product,
+                             @RequestParam("province") Optional<Province> province, Pageable pageable, ModelMap model) {
+
         Page<Product> products;
 
         if (product.isPresent()) {
             products = productService.findAllByNameContaining(product.get(), pageable);
+            model.addAttribute("products", products);
+            return "/home.selected";
+
+        } else if (province.isPresent()){
+            products = productService.findAllByProvince(province.get(), pageable);
+            model.addAttribute("products", products);
+            return "/home.selected";
         } else {
             products = productService.findAll(pageable);
+            model.addAttribute("products", products);
+            return "/home";
         }
-
-        for (Product p : products) {
-            for (Image i : p.getImages()) {
-            }
-        }
-
-        ModelAndView modelAndView = new ModelAndView("/home");
-
-        modelAndView.addObject("carousel", "carouselExampleIndicators");
-        modelAndView.addObject("id", "#");
-        modelAndView.addObject("products", products);
-        return modelAndView;
     }
 
     @RequestMapping(value = "/user")
