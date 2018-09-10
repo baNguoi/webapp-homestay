@@ -20,7 +20,7 @@ public interface ProductService {
 
     Page<Product> findAllByProvince(Province province, Pageable pageable);
 
-    Page<Product> findAllByName(String name, Pageable pageable);
+    Page<Product> findAllByNameContaining(String name, Pageable pageable);
 
     Page<Product> findAllByBedroom(int bedroom, Pageable pageable);
 

@@ -10,12 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
 public class ProductController {
@@ -43,8 +41,13 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ModelAndView showListProduct(Pageable pageable) {
-        Page<Product> products = productService.findAll(pageable);
+    public ModelAndView showListProduct(@RequestParam("product") Optional<String> product, Pageable pageable) {
+        Page<Product> products;
+        if (product.isPresent()) {
+            products = productService.findAllByNameContaining(product.get(), pageable);
+        } else {
+            products = productService.findAll(pageable);
+        }
 
         ModelAndView modelAndView = new ModelAndView("/product/list");
 
