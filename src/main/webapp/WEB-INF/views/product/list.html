@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>User list</h1>
+<p>
+    <a href="/users/create">Create new account</a>
+</p>
+<form>
+    Search user by name:
+    <input type="text" name="s"/>
+    <input type="submit" value="Search"/>
+</form>
+<table border="1">
+    <tr>
+        <td>Name</td>
+        <td>Bedroom</td>
+        <td>Guests</td>
+        <td>Beds</td>
+        <td>Bath</td>
+        <td>Description</td>
+        <td>Price</td>
+        <td>Province</td>
+        <td>UploadImage</td>
+        <td>Edit</td>
+        <td>Delete</td>
+        <td>Views</td>
+    </tr>
+    <th:block th:each="product : ${products}">
+        <tr>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.bedroom}"></td>
+            <td th:text="${product.guests}"></td>
+            <td th:text="${product.beds}"></td>
+            <td th:text="${product.bath}"></td>
+            <td th:text="${product.description}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.province.name}"></td>
+            <td><a th:href="@{/products/uploadImage/__${product.id}__}">uploadImage</a></td>
+            <td><a th:href="@{/products/update/__${product.id}__}">edit</a></td>
+            <td><a th:href="@{/products/delete/__${product.id}__}">delete</a></td>
+            <td><a th:href="@{/products/detail/__${product.id}__}">detail</a></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

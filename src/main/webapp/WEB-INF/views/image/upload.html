@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Image</title>
+</head>
+<body>
+<h1>Upload</h1>
+<form th:action="@{/products/uploadImage((${_csrf.parameterName})=(${_csrf.token}))}" method="post"
+      th:object="${product}" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+    <table>
+        <tr>
+            <td>Image Upload:</td>
+            <td>
+                (1) : <input type="file" name="file"/><br/>
+                (2) : <input type="file" name="file"/><br/>
+                (3) : <input type="file" name="file"/><br/>
+                (4) : <input type="file" name="file"/><br/>
+                (5) : <input type="file" name="file"/><br/>
+                (6) : <input type="file" name="file"/>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="upload"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

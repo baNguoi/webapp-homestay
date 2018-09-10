@@ -1,58 +1,78 @@
-#over {
-    display: none;
-    background: #000;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
+body {
+    background-color: white;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
     height: 100%;
-    opacity: 0.8;
-    z-index: 999;
-}
-a, a:visited, a:active{
-    text-decoration:none;
-}
-.login
-{
-    background-color:whitesmoke;
-    height:700px;
-    width:450px;
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-size:14px;
-    padding-bottom:5px;
-    display:none;
-    overflow:hidden;
-    position:absolute;
-    z-index:99999;
-    top:10%;
-    left:55%;
-    margin-left:-300px;
-    border-radius: 5px;
-}
-
-.login-content label {
-    display: block;
-    padding-bottom: 7px;
-}
-
-.login-content span {
-    display: block;
-}
-
-.img-close {
-    float: right;
-    margin-top:-43px;
-    margin-right:5px
-}
-
-.title {
-    /*text-align: left;*/
-
-}
-.bton-login {
     width: 100%;
 }
 
-.bton-create {
+a {
+    text-decoration: none;
+    color: white;
+}
+
+/*Menu Trang Web*/
+.MenuItems {
+    width: 120px;
+    height: 25px;
+    border: hidden;
     float: left;
+    text-align: center;
+    position: relative;
+    padding: 2px 0;
+    margin-top: 5px;
+    letter-spacing: 2px;
+    font-size: 14px;
+    line-height: 12px;
+    font-weight: 900;
+    color: black;
+    display: inline-block;
+}
+
+.MenuItems::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    height: 2px;
+    width: 100%;
+    background-color: black;
+    transform-origin: center;
+    transform: scale(0, 1);
+    transition: transform 0.3s ease-out;
+}
+
+.MenuItems:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.MenuItems:hover::before {
+    transform-origin: center;
+    transform: scale(1, 1);
+}
+
+.banner {
+    text-align: left;
+    padding: 10px;
+    height: 280px;
+    /*background-image: url("/resource/image/download (2).jpg");*/
+}
+.slide1 {
+    background-image: url("/resource/image/download.jpg");
+}
+
+.slide2 {
+    background-image: url("/resource/image/download (1).jpg");
+}
+
+.slide3 {
+    background-image: url("/resource/image/download (2).jpg");
+}
+
+.city1 {
+    width: 96px;
+    height: 72px;
+    /*background-image: url("/resource/image/hanoi-attractions.jpg");*/
 }

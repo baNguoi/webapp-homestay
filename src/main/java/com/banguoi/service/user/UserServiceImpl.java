@@ -20,13 +20,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Iterable<User> findAll() {
-        return userRepository.findAll();
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
-    public User findUserByEmail(String email) {
-        return userRepository.findUserByEmail(email);
+    public Iterable<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
