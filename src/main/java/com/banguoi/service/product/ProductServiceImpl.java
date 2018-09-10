@@ -5,6 +5,7 @@ import com.banguoi.model.Province;
 import com.banguoi.model.User;
 import com.banguoi.repository.ProductRepository;
 import com.banguoi.service.user.UserService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findAll(Pageable pageable) {
-        return productRepository.findAll(pageable);
+        Page<Product> products = productRepository.findAll(pageable);
+
+        products.forEach(product -> Hibernate.initialize(product.getImages()));
+        return products;
     }
 
     @Override
@@ -46,12 +50,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findAllByProvince(Province province, Pageable pageable) {
-        return productRepository.findAllByProvince(province, pageable);
+        Page<Product> products = productRepository.findAllByProvince(province, pageable);
+
+        products.forEach(product -> Hibernate.initialize(product.getImages()));
+        return products;
     }
 
     @Override
     public Page<Product> findAllByNameContaining(String name, Pageable pageable) {
-        return productRepository.findAllByNameContaining(name, pageable);
+        Page<Product> products = productRepository.findAllByNameContaining(name, pageable);
+
+        products.forEach(product -> Hibernate.initialize(product.getImages()));
+        return products;
     }
 
     @Override

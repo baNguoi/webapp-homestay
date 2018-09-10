@@ -5,7 +5,9 @@ import com.banguoi.model.User;
 import com.banguoi.model.Province;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface ProductService {
 
     Page<Product> findAll(Pageable pageable);
