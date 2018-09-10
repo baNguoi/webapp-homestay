@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,7 +66,7 @@ public class ProductController {
         String email = getPrincipal();
         productService.save(product, email);
 
-        ModelAndView modelAndView = new ModelAndView("/product/create");
+        ModelAndView modelAndView = new ModelAndView("/image/upload");
         modelAndView.addObject("product", product);
         modelAndView.addObject("message", "Product created compliment");
         return modelAndView;
@@ -95,5 +96,45 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView("/image/upload");
         modelAndView.addObject("product", product);
         return modelAndView;
+    }
+
+    @GetMapping("/products/edit/{id}")
+    public ModelAndView showFormEditProduct(@PathVariable("id") Long id) {
+        Product product = productService.findById(id);
+        if (product != null) {
+            ModelAndView modelAndView = new ModelAndView("/product/edit");
+            modelAndView.addObject("product", product);
+            return modelAndView;
+        } else {
+            return new ModelAndView("/error-404");
+        }
+    }
+
+    @PostMapping("/products/edit")
+    public ModelAndView updateProduct(@ModelAttribute("product") Product product) {
+        String email = getPrincipal();
+        productService.save(product, email);
+        ModelAndView modelAndView = new ModelAndView("/product/edit");
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("message", "Product updated successfully");
+        return modelAndView;
+    }
+
+    @GetMapping("products/delete/{id}")
+    public ModelAndView showFormRemoveProduct(@PathVariable("id") Long id) {
+        Product product = productService.findById(id);
+        if (product != null) {
+            ModelAndView modelAndView = new ModelAndView("/product/delete");
+            modelAndView.addObject("product", product);
+            return modelAndView;
+        } else {
+            return new ModelAndView("/error-404");
+        }
+    }
+
+    @PostMapping("/products/delete")
+    public String removeProduct(@ModelAttribute("product") Product product) {
+        productService.remove(product.getId());
+        return "redirect:products";
     }
 }
