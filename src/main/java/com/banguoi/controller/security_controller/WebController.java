@@ -100,7 +100,7 @@ public class WebController {
 
     @RequestMapping(value = "/login")
     public String login() {
-        return "login";
+        return "/loginn";
     }
 
     @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
