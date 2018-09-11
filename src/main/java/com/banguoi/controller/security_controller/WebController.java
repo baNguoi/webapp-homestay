@@ -76,12 +76,12 @@ public class WebController {
     }
 
     @RequestMapping(value = "/user")
-    public ModelAndView user() {
+    public ModelAndView user(Pageable pageable) {
+        User user = userService.findUserByEmail(getPrincipal());
+        Page<Product> products;
+        products = productService.findProductsByUser(user, pageable);
         ModelAndView modelAndView = new ModelAndView("/userPage");
-
-        String email = getPrincipal();
-        User user = userService.findUserByEmail(email);
-
+        modelAndView.addObject("products", products);
         modelAndView.addObject("user", user);
         return modelAndView;
     }

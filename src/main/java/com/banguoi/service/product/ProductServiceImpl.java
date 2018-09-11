@@ -27,8 +27,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> findProductByUser(User user, Pageable pageable) {
-        return productRepository.findProductByUser(user, pageable);
+    public Page<Product> findProductsByUser(User user, Pageable pageable) {
+        return productRepository.findProductsByUser(user, pageable);
     }
 
     @Override
@@ -39,6 +39,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void save(Product product, String email) {
         User user = userService.findUserByEmail(email);
+        product.setUser(user);
+        productRepository.save(product);
+    }
+
+    @Override
+    public void save(Product product, User user) {
         product.setUser(user);
         productRepository.save(product);
     }
