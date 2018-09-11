@@ -61,7 +61,7 @@ public class UserController {
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("user/create");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "User created compliment");
+        modelAndView.addObject("message", "User created successfully");
 
         return modelAndView;
     }
