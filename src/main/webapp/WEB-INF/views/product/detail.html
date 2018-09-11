@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Product blog</title>
-</head>
+<head th:replace="layout :: head"></head>
 <body>
-<h1>Product blog</h1>
-<p>
-    <a href="/products">Bach to products list</a>
-</p>
-<table border="1">
-    <tr>
-        <td>Name:</td>
-        <td th:text="${product.name}"></td>
-    </tr>
-    <tr>
-        <td>Province:</td>
-        <td th:text="${product.province.name}"></td>
-    </tr>
-    <tr>
-        <td>Bedroom:</td>
-        <td th:text="${product.bedroom}"></td>
-    </tr>
-    <tr>
-        <td>Guests:</td>
-        <td th:text="${product.guests}"></td>
-    </tr>
-    <tr>
-        <td>Beds:</td>
-        <td th:text="${product.beds}"></td>
-    </tr>
-    <tr>
-        <td>Bath:</td>
-        <td th:text="${product.bath}"></td>
-    </tr>
-    <tr>
-        <td>Description:</td>
-        <td th:text="${product.description}"></td>
-    </tr>
-    <tr>
-        <td>Price:</td>
-        <td th:text="${product.price}"></td>
-    </tr>
-</table>
+<div>
+    <menu th:replace="layout :: menu"></menu>
+</div>
+<div class="row">
+    <a href="https://unsplash.it/1200/768.jpg?image=263" data-toggle="lightbox" data-gallery="hidden-images" class="col-4">
+        <img src="/resource/image/AnhNen(1).jpg" data-toggle="lightbox"  class="img-fluid">
+    </a>
+    <!--<div>-->
+        <!--<img src="/resource/image/AnhNen(1).jpg" data-toggle="lightbox" data-target="#exampleModalCenter" class="img-fluid"/>-->
+    <!--</div>-->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="padding-top: 50px">
+        <div class="col-md-7">
+            <h2 style="font-family: 'Times New Roman', sans-serif">Luxury Gold Coast Hinterland Villa</h2>
+            <p th:text="${product.province.name}"></p>
+        </div>
+        <div class="col-md-5"></div>
+    </div>
+</div>
+<footer th:replace="layout::footer"></footer>
 </body>
 </html>
