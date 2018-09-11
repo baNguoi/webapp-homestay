@@ -9,12 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,15 +43,14 @@ public class FileUploadController {
     }
 
     @PostMapping("/products/uploadImage")
-    public String singleFileUpload(@RequestParam("file") CommonsMultipartFile[] files, @RequestParam("id") Long id,
-                                   Model model) {
+    public String singleFileUpload(@RequestParam("file") MultipartFile[] files, @RequestParam("id") Long id) {
 
         String UPLOADED_FOLDER = environment.getProperty("url.Image");
         String uploadRootPath = environment.getProperty("url.uploadRootDir");
 
-        File uploadRootDir = new File(uploadRootPath);
-        if (!uploadRootDir.exists()) {
-            uploadRootDir.mkdir();
+        File uploadServer = new File(uploadRootPath);
+        if (!uploadServer.exists()) {
+            uploadServer.mkdir();
         }
 
         Product product = productService.findById(id);
@@ -62,7 +59,7 @@ public class FileUploadController {
         String nameProduct = product.getName();
         nameProduct = nameProduct.replaceAll("\\s+", "");
 
-        for (CommonsMultipartFile file : files) {
+        for (MultipartFile file : files) {
             if (file.isEmpty()) {
                 continue;
             }
@@ -93,17 +90,16 @@ public class FileUploadController {
             images.add(image);
 
             try {
-                File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + image.getName());
+                File serverFile = new File(uploadServer.getAbsolutePath() + File.separator + image.getName());
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 
-                stream.write(file.getBytes());
+                byte[] bytes = file.getBytes();
+                stream.write(bytes);
                 stream.close();
 
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(UPLOADED_FOLDER + image.getName());
-                Files.write(path, bytes);
 
-                model.addAttribute("message", "You uploaded successfully");
+                Path filePath = Paths.get(UPLOADED_FOLDER + File.separator + image.getName());
+                Files.write(filePath, bytes);
 
             } catch (IOException e) {
                 e.printStackTrace();
