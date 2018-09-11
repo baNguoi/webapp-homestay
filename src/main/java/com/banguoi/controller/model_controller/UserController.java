@@ -1,10 +1,8 @@
 package com.banguoi.controller.model_controller;
 
-import com.banguoi.model.Image;
-import com.banguoi.model.Product;
-import com.banguoi.model.Role;
-import com.banguoi.model.User;
+import com.banguoi.model.*;
 import com.banguoi.service.product.ProductService;
+import com.banguoi.service.province.ProvinceService;
 import com.banguoi.service.roles.RoleService;
 import com.banguoi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -32,6 +27,14 @@ public class UserController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProvinceService provinceService;
+
+    @ModelAttribute("provinces")
+    public Iterable<Province> findAllProvince() {
+        return provinceService.findAll();
+    }
 
     private String getPrincipal() {
         String email = null;
@@ -74,7 +77,19 @@ public class UserController {
         User user = userService.findUserByEmail(getPrincipal());
         Product product = new Product();
         ModelAndView modelAndView = new ModelAndView("/homestay/create");
+        modelAndView.addObject("product", product);
         modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @PostMapping("/user/create")
+    public ModelAndView createNewHomestay(@ModelAttribute("product") Product product) {
+        User user = userService.findUserByEmail(getPrincipal());
+        productService.save(product, user);
+
+        ModelAndView modelAndView = new ModelAndView("/image/upload");
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("message", "Product created compliment");
         return modelAndView;
     }
 }
