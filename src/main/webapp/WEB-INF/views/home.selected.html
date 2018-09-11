@@ -13,7 +13,7 @@
     </div>
     <div class="row" style="padding-bottom: 30px">
         <div class="col-5">
-            <form>
+            <form action="/">
                 <select name="province" class="custom-select" style="width: 200px">
                     <option th:each="province:${provinces}" th:value="${province.id}"
                             th:text="${province.name}"></option>
@@ -23,12 +23,13 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container" style="padding-top: 30px">
     <div class="row">
         <th:block th:each="product:${products}">
             <div class="col-3">
-                <div class="card border-success mb-3" style="max-width: 18rem;">
-                    <div th:id="${'carouselExampleIndicators'+product.id}" class="carousel slide" data-ride="carousel">
+                <div class="card border-success mb-3">
+                    <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
+                         data-ride="carousel" style="height: 175px">
                         <ol class="carousel-indicators">
                             <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="0"></li>
                             <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="1"></li>

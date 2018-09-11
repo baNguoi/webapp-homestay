@@ -65,8 +65,9 @@
     <div class="row">
         <th:block th:each="product:${products}">
             <div class="col-3">
-                <div class="card border-success mb-3" style="max-width: 18rem;">
-                    <div th:id="${'carouselExampleIndicators'+product.id}" class="carousel slide" data-ride="carousel">
+                <div class="card border-success mb-3">
+                    <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
+                         data-ride="carousel" style="height: 175px">
                         <ol class="carousel-indicators">
                             <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="0"></li>
                             <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="1"></li>
