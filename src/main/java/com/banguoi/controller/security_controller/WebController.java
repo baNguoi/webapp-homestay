@@ -1,6 +1,5 @@
 package com.banguoi.controller.security_controller;
 
-import com.banguoi.model.Image;
 import com.banguoi.model.Product;
 import com.banguoi.model.Province;
 import com.banguoi.model.User;
@@ -100,7 +99,7 @@ public class WebController {
 
     @RequestMapping(value = "/login")
     public String login() {
-        return "/loginn";
+        return "login";
     }
 
     @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
