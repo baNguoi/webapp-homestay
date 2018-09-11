@@ -4,7 +4,7 @@
 <head th:replace="/homestay/layoutUser::head"></head>
 <body>
 <menu th:replace="/homestay/layoutUser::menu"></menu>
-<div class="container">
+<div class="container" style="padding-top: 100px">
     <form action="#" th:action="@{/user/create-homestay}" th:object="${product}" method="post">
         <div class="form-group">
             <label for="inputname">Name</label>
