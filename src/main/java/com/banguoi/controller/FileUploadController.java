@@ -69,7 +69,6 @@ public class FileUploadController {
 
             Image image = new Image();
 
-
     /*  Đặt tên cho file ảnh */
             int idA = 1;
             if (images.size() > 0) {

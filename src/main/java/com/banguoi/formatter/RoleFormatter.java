@@ -21,7 +21,6 @@ public class RoleFormatter implements Formatter<Role> {
 
     @Override
     public Role parse(String text, Locale locale) throws ParseException {
-
         Long id = Long.parseLong(text);
         Role roles = roleService.findById(id);
         return roles;

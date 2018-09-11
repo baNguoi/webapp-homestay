@@ -77,7 +77,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("/user/edit");
         modelAndView.addObject("user", user);
         return modelAndView;
-    }
+    } 
 
     @PostMapping("/users/update")
     public ModelAndView updateUser(@ModelAttribute("user") User user, BindingResult bindingResult) {

@@ -81,7 +81,6 @@ public class RolesController {
     @PostMapping("/roles/delete")
     public String deleteUser(@ModelAttribute("role") Role role) {
         roleService.remove(role.getId());
-
         return "redirect:/roles";
     }
 
