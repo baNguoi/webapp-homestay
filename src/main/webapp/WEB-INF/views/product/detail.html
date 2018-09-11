@@ -5,32 +5,21 @@
 <div>
     <menu th:replace="layout :: menu"></menu>
 </div>
-<div class="row">
-    <a href="https://unsplash.it/1200/768.jpg?image=263" data-toggle="lightbox" data-gallery="hidden-images" class="col-4">
-        <img src="/resource/image/AnhNen(1).jpg" data-toggle="lightbox"  class="img-fluid">
-    </a>
-    <!--<div>-->
-        <!--<img src="/resource/image/AnhNen(1).jpg" data-toggle="lightbox" data-target="#exampleModalCenter" class="img-fluid"/>-->
-    <!--</div>-->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
+<div id='page' style="padding-top: 60px">
+    <div class='demonstrations'>
+        <a href='/resource/slideshow-ligthbox/example/images/frans_hals.jpg'
+           class='fresco'
+           data-fresco-group='example'
+           data-fresco-caption="Frans Hals, Banquet of the Officers of the St George Civic Guard, 1627">
+            <img src='/resource/slideshow-ligthbox/example/images/thumbnails/frans_hals.jpg' alt=''/>
+        </a>
+
+        <a href='/resource/slideshow-ligthbox/example/images/reynolds.jpg'
+           class='fresco'
+           data-fresco-group='example'
+           data-fresco-caption="Sir Joshua Reynolds, The Countess of Dartmouth, 1757">
+            <img src='/resource/slideshow-ligthbox/example/images/thumbnails/reynolds.jpg' alt=''/>
+        </a>
     </div>
 </div>
 <div class="container">
