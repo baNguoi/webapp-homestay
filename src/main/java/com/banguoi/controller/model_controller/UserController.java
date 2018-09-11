@@ -45,7 +45,7 @@ public class UserController {
 
         User user = new User();
 
-        ModelAndView modelAndView = new ModelAndView("/user/create");
+        ModelAndView modelAndView = new ModelAndView("user/create");
         modelAndView.addObject("user", user);
         return modelAndView;
     }
@@ -55,11 +55,11 @@ public class UserController {
         new User().validate(user, bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("/user/create");
+            return new ModelAndView("user/create");
         }
 
         userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("/user/create");
+        ModelAndView modelAndView = new ModelAndView("user/create");
         modelAndView.addObject("user", user);
         modelAndView.addObject("message", "User created compliment");
 
