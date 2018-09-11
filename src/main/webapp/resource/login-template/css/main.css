@@ -475,5 +475,15 @@ iframe {
   }
 }
 
+.txt3 {
+  font-family: Poppins-Regular;
+  font-size: 16px;
+  color: #666666;
+  line-height: 1.4;
+}
+
+.hov1:hover {
+  color: #c87ef0;
+}
 
 
