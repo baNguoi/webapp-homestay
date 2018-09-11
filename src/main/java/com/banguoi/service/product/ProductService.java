@@ -16,6 +16,8 @@ public interface ProductService {
 
     void save(Product product, String email);
 
+    void save(Product product, User user);
+
     void remove(Long id);
 
     Page<Product> findAllByProvince(Province province, Pageable pageable);

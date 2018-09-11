@@ -40,6 +40,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void save(Product product, User user) {
+        product.setUser(user);
+        productRepository.save(product);
+    }
+
+    @Override
     public void remove(Long id) {
         productRepository.delete(id);
     }
