@@ -94,7 +94,6 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         return bCryptPasswordEncoder;
     }
 
-
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new RoleFormatter(applicationContext.getBean(RoleService.class)));
@@ -164,7 +163,7 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         return transactionManager;
     }
 
-    Properties additionalProperties() {
+    private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
@@ -192,5 +191,4 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-
 }

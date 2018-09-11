@@ -54,13 +54,13 @@ public class AdminController {
         new User().validate(user, bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("/user/create");
+            return new ModelAndView("user/create");
         }
 
         userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("/user/create");
+        ModelAndView modelAndView = new ModelAndView("user/create");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "User created compliment");
+        modelAndView.addObject("message", "User created successfully");
 
         return modelAndView;
     }
@@ -73,7 +73,7 @@ public class AdminController {
             return new ModelAndView("/error.404");
         }
 
-        ModelAndView modelAndView = new ModelAndView("/user/edit");
+        ModelAndView modelAndView = new ModelAndView("/homestay/detail");
         modelAndView.addObject("user", user);
         return modelAndView;
     }

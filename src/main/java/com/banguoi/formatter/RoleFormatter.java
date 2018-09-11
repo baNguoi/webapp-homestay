@@ -5,7 +5,6 @@ import com.banguoi.service.roles.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
-
 import java.text.ParseException;
 import java.util.Locale;
 
@@ -21,7 +20,6 @@ public class RoleFormatter implements Formatter<Role> {
 
     @Override
     public Role parse(String text, Locale locale) throws ParseException {
-
         Long id = Long.parseLong(text);
         Role roles = roleService.findById(id);
         return roles;

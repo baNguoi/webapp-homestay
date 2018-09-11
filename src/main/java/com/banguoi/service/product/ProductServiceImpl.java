@@ -28,7 +28,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findProductsByUser(User user, Pageable pageable) {
-        return productRepository.findProductsByUser(user, pageable);
+        Page<Product> products = productRepository.findProductsByUser(user, pageable);
+
+        products.forEach(product -> Hibernate.initialize(product.getImages()));
+        return products;
     }
 
     @Override

@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Optional;
 
 @Controller
-@Transactional
 public class WebController {
 
     @Autowired
@@ -79,8 +77,8 @@ public class WebController {
     public ModelAndView user(Pageable pageable) {
         User user = userService.findUserByEmail(getPrincipal());
         Page<Product> products;
-        products = productService.findProductsByUser(user, pageable);
-        ModelAndView modelAndView = new ModelAndView("/userPage");
+        products = productService.findAll(pageable);
+        ModelAndView modelAndView = new ModelAndView("homestay/userPage");
         modelAndView.addObject("products", products);
         modelAndView.addObject("user", user);
         return modelAndView;

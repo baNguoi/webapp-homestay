@@ -3,7 +3,6 @@ package com.banguoi.model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -151,7 +150,6 @@ public class User implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "address", "address.empty");
 
         String phoneNumber = user.getPhoneNumber();
-//        ValidationUtils.rejectIfEmpty(errors, "phoneNumber", "phoneNumber.empty");
         if (phoneNumber.length() > 11 || phoneNumber.length() < 10) {
             errors.rejectValue("phoneNumber", "phone.length");
         }

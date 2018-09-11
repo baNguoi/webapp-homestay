@@ -11,8 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -56,56 +59,6 @@ public class UserController {
     public ModelAndView listPostHomestay(Pageable pageable) {
         User user = userService.findUserByEmail(getPrincipal());
         Page<Product> products = productService.findProductsByUser(user, pageable);
-    @GetMapping("/users")
-    public ModelAndView listUser(@RequestParam("s")Optional<String> s) {
-        Iterable<User> users;
-        if (s.isPresent()) {
-            users = userService.findUserByNameContaining(s.get());
-        } else {
-            users = userService.findAll();
-        }
-
-        ModelAndView modelAndView = new ModelAndView("user/list");
-        modelAndView.addObject("users", users);
-        return modelAndView;
-    }
-
-    @GetMapping("/users/create")
-    public ModelAndView showCreateForm() {
-
-        User user = new User();
-
-        ModelAndView modelAndView = new ModelAndView("user/create");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
-
-    @PostMapping("/users/create")
-    public ModelAndView createUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        new User().validate(user, bindingResult);
-
-        if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("user/create");
-        }
-
-        for (Product p : products) {
-            for (Image i : p.getImages()) {
-            }
-        userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("user/create");
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "User created successfully");
-
-        return modelAndView;
-    }
-
-    @GetMapping("/users/update/{id}")
-    public ModelAndView showUpdateForm(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-
-        if (user == null) {
-            return new ModelAndView("/error.404");
-        }
 
         ModelAndView modelAndView = new ModelAndView("/homestay/list");
         modelAndView.addObject("products", products);
@@ -113,7 +66,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/user/create")
+    @GetMapping("/user/create-homestay")
     public ModelAndView showCreateHomestayForm() {
         User user = userService.findUserByEmail(getPrincipal());
         Product product = new Product();
@@ -123,14 +76,14 @@ public class UserController {
         return modelAndView;
     }
 
-    @PostMapping("/user/create")
+    @PostMapping("/user/create-homestay")
     public ModelAndView createNewHomestay(@ModelAttribute("product") Product product) {
         User user = userService.findUserByEmail(getPrincipal());
         productService.save(product, user);
 
         ModelAndView modelAndView = new ModelAndView("/image/upload");
         modelAndView.addObject("product", product);
-        modelAndView.addObject("message", "Product created compliment");
+        modelAndView.addObject("message", "Product created successfully");
         return modelAndView;
     }
 }
