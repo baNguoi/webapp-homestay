@@ -101,7 +101,7 @@ public class ProductController {
         return modelAndView;
     }
 
-    @GetMapping("/products/edit/{id}")
+    @GetMapping("/products/update/{id}")
     public ModelAndView showFormEditProduct(@PathVariable("id") Long id) {
         Product product = productService.findById(id);
         if (product != null) {
@@ -113,7 +113,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/products/edit")
+    @PostMapping("/products/update")
     public ModelAndView updateProduct(@ModelAttribute("product") Product product) {
         String email = getPrincipal();
         productService.save(product, email);
@@ -138,7 +138,7 @@ public class ProductController {
     @PostMapping("/products/delete")
     public String removeProduct(@ModelAttribute("product") Product product) {
         productService.remove(product.getId());
-        return "redirect:products";
+        return "redirect:/products";
     }
 
     @GetMapping("/products/view/{id}")

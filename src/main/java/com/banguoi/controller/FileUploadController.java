@@ -113,6 +113,6 @@ public class FileUploadController {
         }
 
         product.setImages(images);
-        return "/image/uploadStatus";
+        return "redirect:/user/manager";
     }
 }
