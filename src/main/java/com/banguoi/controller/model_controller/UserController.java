@@ -61,6 +61,10 @@ public class UserController {
         Page<Product> products = productService.findProductsByUser(user, pageable);
 
         ModelAndView modelAndView = new ModelAndView("/homestay/list");
+        if (products.getTotalElements() == 0) {
+            String message = "You don't have any homestay!";
+            modelAndView.addObject("message", message);
+        }
         modelAndView.addObject("products", products);
         modelAndView.addObject("user", user);
         return modelAndView;
