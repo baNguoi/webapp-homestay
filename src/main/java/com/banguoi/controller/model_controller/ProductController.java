@@ -2,14 +2,17 @@ package com.banguoi.controller.model_controller;
 
 import com.banguoi.model.Product;
 import com.banguoi.model.Province;
+import com.banguoi.model.User;
 import com.banguoi.service.product.ProductService;
 import com.banguoi.service.province.ProvinceService;
+import com.banguoi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +25,9 @@ public class ProductController {
 
     @Autowired
     private ProvinceService provinceService;
+
+    @Autowired
+    private UserService userService;
 
     @ModelAttribute("provinces")
     public Iterable<Province> findAllProvince() {
@@ -41,18 +47,26 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ModelAndView showListProduct(@RequestParam("product") Optional<String> product, Pageable pageable) {
+    public String showListProduct(@RequestParam("product") Optional<String> product,
+                                  @RequestParam("province") Optional<Province> province, Pageable pageable, ModelMap model) {
         Page<Product> products;
+
+        User user = userService.findUserByEmail(getPrincipal());
+        model.addAttribute("user", user);
+
         if (product.isPresent()) {
             products = productService.findAllByNameContaining(product.get(), pageable);
+            model.addAttribute("products", products);
+            return "/homestay/userSelected";
+        } else if (province.isPresent()) {
+            products = productService.findAllByProvince(province.get(), pageable);
+            model.addAttribute("products", products);
+            return "/homestay/userSelected";
         } else {
             products = productService.findAll(pageable);
+            model.addAttribute("products", products);
+            return "/product/list";
         }
-
-        ModelAndView modelAndView = new ModelAndView("/product/list");
-
-        modelAndView.addObject("products", products);
-        return modelAndView;
     }
 
     @GetMapping("/products/create")
@@ -139,17 +153,5 @@ public class ProductController {
     public String removeProduct(@ModelAttribute("product") Product product) {
         productService.remove(product.getId());
         return "redirect:/products";
-    }
-
-    @GetMapping("/products/view/{id}")
-    public ModelAndView viewProduct(@PathVariable("id") Long id) {
-        Product product = productService.findById(id);
-        if (product != null) {
-            ModelAndView modelAndView = new ModelAndView("/product/view");
-            modelAndView.addObject("product", product);
-            return modelAndView;
-        } else {
-            return new ModelAndView("/error-404");
-        }
     }
 }

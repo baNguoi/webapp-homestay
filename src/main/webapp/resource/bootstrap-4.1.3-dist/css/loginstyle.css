@@ -14,13 +14,12 @@ a {
 
 /*Menu Trang Web*/
 .MenuItems {
-    width: 120px;
     height: 25px;
     border: hidden;
     float: left;
     text-align: center;
     position: relative;
-    padding: 2px 0;
+    padding: 0 3px 0 10px;
     margin-top: 5px;
     letter-spacing: 2px;
     font-size: 14px;
@@ -30,13 +29,17 @@ a {
     display: inline-block;
 }
 
+form ul li a {
+    padding: 0 10px;
+}
+
 .MenuItems::before {
     content: "";
     display: block;
     position: absolute;
     bottom: 5px;
     height: 2px;
-    width: 100%;
+    width: 90%;
     background-color: black;
     transform-origin: center;
     transform: scale(0, 1);

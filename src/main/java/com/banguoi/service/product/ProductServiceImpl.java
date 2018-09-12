@@ -36,7 +36,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(Long id) {
-        return productRepository.findOne(id);
+        Product product = productRepository.findOne(id);
+        Hibernate.initialize(product.getImages());
+        return product;
     }
 
     @Override
