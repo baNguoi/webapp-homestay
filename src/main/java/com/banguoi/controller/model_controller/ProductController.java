@@ -154,16 +154,4 @@ public class ProductController {
         productService.remove(product.getId());
         return "redirect:/products";
     }
-
-    @GetMapping("/products/view/{id}")
-    public ModelAndView viewProduct(@PathVariable("id") Long id) {
-        Product product = productService.findById(id);
-        if (product != null) {
-            ModelAndView modelAndView = new ModelAndView("/product/view");
-            modelAndView.addObject("product", product);
-            return modelAndView;
-        } else {
-            return new ModelAndView("/error-404");
-        }
-    }
 }
