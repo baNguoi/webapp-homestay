@@ -8,7 +8,7 @@
     <a class="navbar-brand" href="#"><img src="/resource/image/Untitled2.png"
                                           style="height: 60px; width: 130px"></a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline my-2 my-lg-0" style="padding: 0 600px 0 40px" action="/products">
+        <form class="form-inline my-2 my-lg-0" style="padding: 0 300px 0 40px" action="/products">
             <input class="form-control mr-sm-2" type="text" name="product" placeholder="Search by name"
                    aria-label="Search"/>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -37,9 +37,11 @@
     </div>
 </nav>
 <div class="container" style="padding-top: 100px">
-    <div class="row" style="color: black">
+    <div class="row">
         <th:block th:if="${message}">
-            <p th:text="${message}"></p>
+            <form class="form-inline" th:action="@{/user/create-homestay}" method="get">
+                <button type="submit" class="btn btn-primary mb-3">Create new homestay</button>
+            </form>
         </th:block>
     </div>
     <div class="row">
@@ -73,10 +75,11 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
-                    <div class="card-body text-success">
-                        <h5 class="card-title" th:text="${product.name}"></h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
+                    <div class="card-body text-success" style="padding: 0px 10px 0px 10px">
+                        <h5 class="card-title" style="margin: 0px" th:text="${product.name}"></h5>
+                        <p class="card-text" style="margin: 0px" th:text="${'Form: &#8363;'+ product.price + ' per night'}">
+                        <p class="card-text" th:text="${'At: ' + product.address + ' ' + product.province.name}"></p>
+                        </p>
                     </div>
                 </div>
             </div>
