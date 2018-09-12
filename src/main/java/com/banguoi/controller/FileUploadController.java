@@ -69,7 +69,6 @@ public class FileUploadController {
 
             Image image = new Image();
 
-    /*  Đặt tên cho file ảnh */
             int idA = 1;
             if (images.size() > 0) {
                 for (Image i : images) {
@@ -88,7 +87,6 @@ public class FileUploadController {
                 image.setName(nameProduct + "(" + idA + ")" + ".jpg");
             }
 
-    /*  Lưu tên file ảnh vào MySQL */
             image.setProduct(product);
             imageService.save(image);
 
@@ -115,6 +113,6 @@ public class FileUploadController {
         }
 
         product.setImages(images);
-        return "/image/uploadStatus";
+        return "redirect:/user/manager";
     }
 }

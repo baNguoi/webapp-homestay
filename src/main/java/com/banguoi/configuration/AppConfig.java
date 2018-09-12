@@ -191,5 +191,4 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-
 }

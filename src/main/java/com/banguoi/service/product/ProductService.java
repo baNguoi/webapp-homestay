@@ -12,11 +12,13 @@ public interface ProductService {
 
     Page<Product> findAll(Pageable pageable);
 
-    Page<Product> findProductByUser(User user, Pageable pageable);
+    Page<Product> findProductsByUser(User user, Pageable pageable);
 
     Product findById(Long id);
 
     void save(Product product, String email);
+
+    void save(Product product, User user);
 
     void remove(Long id);
 

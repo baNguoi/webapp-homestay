@@ -8,8 +8,6 @@ import com.banguoi.model.Province;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
-    Page<Product> findProductByUser(User user, Pageable pageable);
-
     Page<Product> findAllByProvince(Province province, Pageable pageable);
 
     Page<Product> findAllByNameContaining(String name, Pageable pageable);
@@ -17,4 +15,6 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
     Page<Product> findAllByBedroom(int bedroom, Pageable pageable);
 
     Page<Product> findAllByPrice(double price, Pageable pageable);
+
+    Page<Product> findProductsByUser(User user, Pageable pageable);
 }

@@ -14,7 +14,7 @@
 <p>
     <a href="/products">Products list</a>
 </p>
-<form th:action="@{/product/delete}" th:object="${product}" method="post">
+<form th:action="@{/products/delete}" th:object="${product}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>
