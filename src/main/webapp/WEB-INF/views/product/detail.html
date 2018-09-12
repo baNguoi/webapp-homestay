@@ -6,7 +6,7 @@
     <menu th:replace="layout :: menu"></menu>
 </div>
 <div id='page' style="padding-top: 60px">
-    <div class='demonstrations'>
+    <div class='demonstrations' th:each="im:${product.images}">
         <a href='/resource/slideshow-ligthbox/example/images/frans_hals.jpg'
            class='fresco'
            data-fresco-group='example'

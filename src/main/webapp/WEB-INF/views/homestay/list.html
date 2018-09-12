@@ -37,6 +37,11 @@
     </div>
 </nav>
 <div class="container" style="padding-top: 100px">
+    <div class="row" style="color: black">
+        <th:block th:if="${message}">
+            <p th:text="${message}"></p>
+        </th:block>
+    </div>
     <div class="row">
         <th:block th:each="product:${products}">
             <div class="col-3">
