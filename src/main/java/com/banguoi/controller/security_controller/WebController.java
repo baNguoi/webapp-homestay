@@ -52,18 +52,25 @@ public class WebController {
     }
 
     @RequestMapping(value = {"/", "home"})
-    public String home(@RequestParam("product") Optional<String> product,
-                             @RequestParam("province") Optional<Province> province, Pageable pageable, ModelMap model) {
+    public String home(@RequestParam(value = "name", defaultValue = "") Optional<String> name,
+                       @RequestParam(value = "province") Optional<Province> province,
+                       @RequestParam(value = "bedroom", defaultValue = "") Optional<Integer> bedroom,
+                       @RequestParam(value = "beds", defaultValue = "") Optional<Integer> beds,
+                       @RequestParam(value = "guests", defaultValue = "") Optional<Integer> guests,
+                       Pageable pageable, ModelMap model) {
 
         Page<Product> products;
 
-        if (product.isPresent()) {
-            products = productService.findAllByNameContaining(product.get(), pageable);
-            model.addAttribute("products", products);
-            return "/home.selected";
-
-        } else if (province.isPresent()){
-            products = productService.findAllByProvince(province.get(), pageable);
+        if (name.isPresent() && province.isPresent() && beds.isPresent() && bedroom.isPresent()) {
+            if (bedroom.get() == 0 && beds.get() == 0 && guests.get() == 0) {
+                products = productService.findAllByNameContainingAndProvince(name.get(), province.get(), pageable);
+            } else if (bedroom.get() == 0 || beds.get() == 0 || guests.get() == 0) {
+                products = productService.findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(name.get(),
+                        province.get(), bedroom.get(), beds.get(), guests.get(), pageable);
+            } else {
+                products = productService.findAllByNameContainingAndProvinceAndBedroomAndBedsAndGuests(name.get(),
+                        province.get(), bedroom.get(), beds.get(), guests.get(), pageable);
+            }
             model.addAttribute("products", products);
             return "/home.selected";
         } else {
