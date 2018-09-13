@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head th:replace="/homestay/layoutUser::head"></head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -40,48 +40,60 @@
     <div class="row">
         <th:block th:if="${message}">
             <form class="form-inline" th:action="@{/user/create-homestay}" method="get">
-                <button type="submit" class="btn btn-primary mb-3">Create new homestay</button>
+                <div class="alert"><h5 th:text="${message}"></h5></div>
+                <button type="submit" class="btn btn-primary mb-3"> Click to create new homestay</button>
             </form>
         </th:block>
     </div>
     <div class="row">
         <th:block th:each="product:${products}">
             <div class="col-3">
-                <div class="card border-success mb-3">
-                    <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
-                         data-ride="carousel" style="height: 175px">
-                        <ol class="carousel-indicators">
-                            <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="0"></li>
-                            <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="1"></li>
-                            <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item" th:each="im:${product.images}">
-                                <a th:href="@{/products/detail/__${product.id}__}">
-                                    <img class="d-block w-100" th:src="@{/resource/image/__${im.name}__}">
-                                </a>
+                <a th:href="@{/user/detail/__${product.id}__}">
+                    <div class="card border-success mb-3">
+                        <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
+                             data-ride="carousel" style="height: 175px">
+                            <ol class="carousel-indicators">
+                                <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="0"></li>
+                                <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="1"></li>
+                                <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item" th:if="${product.getImages().size()== 0}">
+                                    <a th:href="@{/user/detail/__${product.id}__}">
+                                        <img src="/resource/image/ImageDefault.jpg" height="175px">
+                                    </a>
+                                </div>
+                                <div class="carousel-item" th:each="im:${product.images}">
+                                    <a th:href="@{/user/detail/__${product.id}__}">
+                                        <img class="d-block w-100" th:src="@{/resource/image/__${im.name}__}" height="175px">
+                                    </a>
+                                </div>
                             </div>
+                            <a class="carousel-control-prev" th:href="${'#carouselExampleIndicators'+product.id}"
+                               role="button"
+                               data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" th:href="${'#carouselExampleIndicators'+product.id}"
+                               role="button"
+                               data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
                         </div>
-                        <a class="carousel-control-prev" th:href="${'#carouselExampleIndicators'+product.id}"
-                           role="button"
-                           data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" th:href="${'#carouselExampleIndicators'+product.id}"
-                           role="button"
-                           data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
+                        <a th:href="@{/user/detail/__${product.id}__}" style="text-decoration:none">
+                            <div class="card-body text-success" style="padding: 0px 10px 0px 10px">
+                                <h5 class="card-title" style="margin: 0px" th:text="${product.name}"></h5>
+                                <p class="card-text" style="margin: 0px"
+                                   th:text="${'Form: &#8363;'+ product.price + ' per night'}">
+                                <p class="card-text"
+                                   th:text="${'At: ' + product.address + ' ' + product.province.name}"></p>
+                                </p>
+                            </div>
                         </a>
                     </div>
-                    <div class="card-body text-success" style="padding: 0px 10px 0px 10px">
-                        <h5 class="card-title" style="margin: 0px" th:text="${product.name}"></h5>
-                        <p class="card-text" style="margin: 0px" th:text="${'Form: &#8363;'+ product.price + ' per night'}">
-                        <p class="card-text" th:text="${'At: ' + product.address + ' ' + product.province.name}"></p>
-                        </p>
-                    </div>
-                </div>
+                </a>
             </div>
         </th:block>
     </div>
