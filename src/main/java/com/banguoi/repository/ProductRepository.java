@@ -10,11 +10,19 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
     Page<Product> findAllByProvince(Province province, Pageable pageable);
 
-    Page<Product> findAllByNameContaining(String name, Pageable pageable);
+    Page<Product> findAllByNameContainingAndProvince(String name, Province province, Pageable pageable);
 
-    Page<Product> findAllByBedroom(int bedroom, Pageable pageable);
+    Page<Product> findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(String name,
+                                                                             Province province,
+                                                                             int bedroom, int beds,
+                                                                             int guests, Pageable pageable);
 
     Page<Product> findAllByPrice(double price, Pageable pageable);
 
     Page<Product> findProductsByUser(User user, Pageable pageable);
+
+    Page<Product> findAllByNameContainingAndProvinceAndBedroomAndBedsAndGuests(String name,
+                                                                               Province province,
+                                                                               int bedroom, int beds,
+                                                                               int guests, Pageable pageable);
 }
