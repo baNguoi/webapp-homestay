@@ -65,31 +65,18 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/users/update/{id}")
-    public ModelAndView showUpdateForm(@PathVariable("id") Long id) {
+    @PostMapping("/users/update/{id}")
+    public ModelAndView updateUser(@PathVariable("id") Long id, @RequestParam("role") Role role) {
         User user = userService.findById(id);
-
-        if (user == null) {
-            return new ModelAndView("/error.404");
-        }
-
-        ModelAndView modelAndView = new ModelAndView("/homestay/detail");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
-
-    @PostMapping("/users/update")
-    public ModelAndView updateUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        new User().validate(user, bindingResult);
-
-        if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("/user/edit");
-        }
+        user.setRole(role);
 
         userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("/user/edit");
+        Iterable<User> users = userService.findAll();
+
+        ModelAndView modelAndView = new ModelAndView("/user/list");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "User updated successfully");
+        modelAndView.addObject("users", users);
+        modelAndView.addObject("message", "Role chang successfully");
         return modelAndView;
     }
 
