@@ -26,6 +26,8 @@ public interface ProductService {
 
     Page<Product> findAllByNameContainingAndProvince(String name, Province province, Pageable pageable);
 
+    Page<Product> findAllByUserAndNameContainingAndProvince(User user, String name, Province province, Pageable pageable);
+
     Page<Product> findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(String name, Province province,
                                                                              int bedroom, int beds, int guests, Pageable pageable);
 
