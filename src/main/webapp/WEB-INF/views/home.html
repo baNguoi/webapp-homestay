@@ -15,39 +15,18 @@
                 <img class="d-block w-100" height="850px" src="/resource/image/AnhNen(1).jpg" alt="First slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h1>Where do we go?</h1>
-                    <form>
-                        <select name="province" class="custom-select" style="width: 200px">
-                            <option th:each="province:${provinces}" th:value="${province.id}"
-                                    th:text="${province.name}"></option>
-                        </select>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
                 </div>
             </div>
             <div class="carousel-item">
                 <img class="d-block w-100" src="/resource/image/AnhNen(2).jpg" height="850px" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h1>Where do we go?</h1>
-                    <form>
-                        <select name="province" class="custom-select" style="width: 200px">
-                            <option th:each="province:${provinces}" th:value="${province.id}"
-                                    th:text="${province.name}"></option>
-                        </select>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
                 </div>
             </div>
             <div class="carousel-item">
                 <img class="d-block w-100" height="850px" src="/resource/image/AnhNen(3).jpg" alt="Third slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h1>Where do we go?</h1>
-                    <form>
-                        <select name="province" class="custom-select" style="width: 200px">
-                            <option th:each="province:${provinces}" th:value="${province.id}"
-                                    th:text="${province.name}"></option>
-                        </select>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -59,6 +38,54 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="padding-top: 40px">
+        <form>
+            <label>Name:</label>
+            <input type="text" name="name"/>
+
+            <label>Province:</label>
+            <select  name="province">
+                <option th:each="p:${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
+            </select>
+
+            <select name="bedroom">
+                <option selected value="0">Bedroom...</option>
+                <option value="1">1 bedroom</option>
+                <option value="2">2 bedroom</option>
+                <option value="3">3 bedroom</option>
+                <option value="4">4 bedroom</option>
+                <option value="5">5 bedroom</option>
+                <option value="6">6 bedroom</option>
+            </select>
+
+            <select  name="beds">
+                <option selected value="0">Beds...</option>
+                <option value="1">1 Beds</option>
+                <option value="2">2 Beds</option>
+                <option value="3">3 Beds</option>
+                <option value="4">4 Beds</option>
+                <option value="5">5 Beds</option>
+                <option value="6">6 Beds</option>
+            </select>
+
+            <select  name="guests">
+                <option selected value="0">Guests...</option>
+                <option value="1">1 Guests</option>
+                <option value="2">2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5">5 Guests</option>
+                <option value="7">6 Guests</option>
+                <option value="8">6 Guests</option>
+                <option value="9">6 Guests</option>
+                <option value="10">6 Guests</option>
+            </select>
+
+            <input type="submit" value="Search"/>
+        </form>
     </div>
 </div>
 <div th:replace="layout::div1"></div>

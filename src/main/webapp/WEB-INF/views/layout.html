@@ -16,39 +16,45 @@
 </head>
 <body>
 <menu th:fragment="menu">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="#"><img src="/resource/image/Untitled2.png" style="height: 60px; width: 130px"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline my-2 my-lg-0" style="padding: 0 600px 0 40px" action="/">
-                <input class="form-control mr-sm-2" type="text" name="product" placeholder="Search by name"
-                       aria-label="Search"/>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            <form class="form-inline my-2 my-lg-0">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/login">
-                            <div class="MenuItems">Become a host</div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">
-                            <div class="MenuItems">Login</div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users/create">
-                            <div class="MenuItems">Sign up</div>
-                        </a>
-                    </li>
-                </ul>
-            </form>
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+                <div class="col-lg-4">
+                    <a class="navbar-brand" href="#"><img src="/resource/image/Untitled2.png"
+                                                          style="height: 60px; width: 130px"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <form class="form-inline my-2 my-lg-0">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/login">
+                                        <div class="MenuItems">Become a host</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login">
+                                        <div class="MenuItems">Login</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/users/create">
+                                        <div class="MenuItems">Sign up</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </nav>
         </div>
-    </nav>
+    </div>
 </menu>
 <div th:fragment="div1">
     <div class="container" style="padding-top: 30px">
@@ -95,7 +101,8 @@
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in
+                                <p class="card-text">This is a longer card with supporting text below as a natural
+                                    lead-in
                                     to additional content. This content is a little bit longer.</p>
                                 <p class="card-text">
                                     <small class="text-muted">Last updated 3 mins ago</small>
