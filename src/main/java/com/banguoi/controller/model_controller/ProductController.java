@@ -1,8 +1,10 @@
 package com.banguoi.controller.model_controller;
 
+import com.banguoi.model.Image;
 import com.banguoi.model.Product;
 import com.banguoi.model.Province;
 import com.banguoi.model.User;
+import com.banguoi.service.image.ImageService;
 import com.banguoi.service.product.ProductService;
 import com.banguoi.service.province.ProvinceService;
 import com.banguoi.service.user.UserService;
@@ -28,6 +30,9 @@ public class ProductController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ImageService imageService;
 
     @ModelAttribute("provinces")
     public Iterable<Province> findAllProvince() {
@@ -150,6 +155,7 @@ public class ProductController {
     @GetMapping("products/delete/{id}")
     public ModelAndView showFormRemoveProduct(@PathVariable("id") Long id) {
         Product product = productService.findById(id);
+
         if (product != null) {
             ModelAndView modelAndView = new ModelAndView("/product/delete");
             modelAndView.addObject("product", product);
@@ -161,7 +167,13 @@ public class ProductController {
 
     @PostMapping("/products/delete")
     public String removeProduct(@ModelAttribute("product") Product product) {
+        Iterable<Image> images = imageService.findAllByProduct(product);
+
+        for (Image im : images) {
+            imageService.remove(im.getId());
+        }
+
         productService.remove(product.getId());
-        return "redirect:/products";
+        return "redirect:/user/manager";
     }
 }
