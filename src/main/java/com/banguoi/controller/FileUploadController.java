@@ -95,6 +95,6 @@ public class FileUploadController {
         }
 
         product.setImages(images);
-        return "redirect:/user/manager";
+        return "redirect:/user/managerHomestays";
     }
 }

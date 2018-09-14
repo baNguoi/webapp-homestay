@@ -45,33 +45,33 @@ public class UserController {
         return email;
     }
 
-    @RequestMapping(value = "/user/manager", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/managerHomestays", method = RequestMethod.GET)
     public ModelAndView listPostHomestay(Pageable pageable) {
         User user = userService.findUserByEmail(getPrincipal());
         Page<Product> products = productService.findProductsByUser(user, pageable);
 
-        ModelAndView modelAndView = new ModelAndView("/homestay/list");
+        ModelAndView displayListHomestaysModelAndView = new ModelAndView("/homestay/list");
         if (products.getTotalElements() == 0) {
             String message = "You don't have any homestay!";
-            modelAndView.addObject("message", message);
+            displayListHomestaysModelAndView.addObject("message", message);
         }
-        modelAndView.addObject("products", products);
-        modelAndView.addObject("user", user);
-        return modelAndView;
+        displayListHomestaysModelAndView.addObject("products", products);
+        displayListHomestaysModelAndView.addObject("user", user);
+        return displayListHomestaysModelAndView;
     }
 
-    @GetMapping("/user/create-homestay")
+    @GetMapping("/user/createHomestay")
     public ModelAndView showCreateHomestayForm() {
         User user = userService.findUserByEmail(getPrincipal());
         Product product = new Product();
 
-        ModelAndView modelAndView = new ModelAndView("/homestay/create");
-        modelAndView.addObject("product", product);
-        modelAndView.addObject("user", user);
-        return modelAndView;
+        ModelAndView creatHomestayModelAndView = new ModelAndView("/homestay/create");
+        creatHomestayModelAndView.addObject("product", product);
+        creatHomestayModelAndView.addObject("user", user);
+        return creatHomestayModelAndView;
     }
 
-    @PostMapping("/user/create-homestay")
+    @PostMapping("/user/createHomestay")
     public ModelAndView createNewHomestay(@ModelAttribute("product") Product product) {
         User user = userService.findUserByEmail(getPrincipal());
         productService.save(product, user);

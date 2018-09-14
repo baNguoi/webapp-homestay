@@ -5,8 +5,7 @@
 <head th:replace="/homestay/layoutUser::head"></head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="#"><img src="/resource/image/Untitled2.png"
-                                          style="height: 60px; width: 130px"></a>
+    <a class="navbar-brand" href="#"><img class="logo" src="/resource/image/Untitled2.png"></a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form class="form-inline my-2 my-lg-0" style="padding: 0 300px 0 40px" action="/products">
             <input class="form-control mr-sm-2" type="text" name="product" placeholder="Search by name"
@@ -17,7 +16,7 @@
             <form class="form-inline my-2 my-lg-0">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/user/create-homestay">
+                        <a class="nav-link" href="/user/createHomestay">
                             <div class="MenuItems">Add new homeStay</div>
                         </a>
                     </li>
@@ -39,7 +38,7 @@
 <div class="container" style="padding-top: 100px">
     <div class="row">
         <th:block th:if="${message}">
-            <form class="form-inline" th:action="@{/user/create-homestay}" method="get">
+            <form class="form-inline" th:action="@{/user/createHomestay}" method="get">
                 <div class="alert"><h5 th:text="${message}"></h5></div>
                 <button type="submit" class="btn btn-primary mb-3"> Click to create new homestay</button>
             </form>
@@ -51,7 +50,7 @@
                 <a th:href="@{/user/detail/__${product.id}__}">
                     <div class="card border-success mb-3">
                         <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
-                             data-ride="carousel" style="height: 175px">
+                             data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="0"></li>
                                 <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="1"></li>
@@ -59,13 +58,13 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item" th:if="${product.getImages().size()== 0}">
-                                    <a th:href="@{/user/detail/__${product.id}__}">
-                                        <img src="/resource/image/ImageDefault.jpg" height="175px">
+                                    <a th:href="@{/user/detailHomestay/__${product.id}__}">
+                                        <img class="d-block" src="/resource/image/ImageDefault.jpg">
                                     </a>
                                 </div>
                                 <div class="carousel-item" th:each="im:${product.images}">
-                                    <a th:href="@{/user/detail/__${product.id}__}">
-                                        <img class="d-block w-100" th:src="@{/resource/image/__${im.name}__}" height="175px">
+                                    <a th:href="@{/user/detailHomestay/__${product.id}__}">
+                                        <img class="d-block w-100" th:src="@{/resource/image/__${im.name}__}">
                                     </a>
                                 </div>
                             </div>
@@ -82,10 +81,10 @@
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
-                        <a th:href="@{/user/detail/__${product.id}__}" style="text-decoration:none">
-                            <div class="card-body text-success" style="padding: 0px 10px 0px 10px">
-                                <h5 class="card-title" style="margin: 0px" th:text="${product.name}"></h5>
-                                <p class="card-text" style="margin: 0px"
+                        <a th:href="@{/user/detailHomestay/__${product.id}__}" style="text-decoration:none">
+                            <div class="card-body text-success">
+                                <h5 class="card-title" th:text="${product.name}"></h5>
+                                <p class="card-text"
                                    th:text="${'Form: &#8363;'+ product.price + ' per night'}">
                                 <p class="card-text"
                                    th:text="${'At: ' + product.address + ' ' + product.province.name}"></p>

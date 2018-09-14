@@ -80,6 +80,29 @@ form ul li a {
     /*background-image: url("/resource/image/hanoi-attractions.jpg");*/
 }
 
+.logo{
+    height: 60px;
+    width: 130px;
+}
+
 .carousel-caption {
     padding-bottom: 500px;
 }
+
+.card-img-top .d-block{
+    height: 175px;
+}
+
+.card-body{
+    padding: 0px 10px 0px 10px;
+}
+
+.card-title {
+    margin: 10px 0px 0px 0px;
+}
+
+.card-text{
+ margin: 0px 0px 0px 0px;
+}
+
+
