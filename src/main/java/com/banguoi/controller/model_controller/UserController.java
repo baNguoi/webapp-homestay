@@ -56,9 +56,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/manager", method = RequestMethod.GET)
-    public ModelAndView listPostHomestay(Pageable pageable) {
+    public ModelAndView listPostHomestay(@RequestParam(value = "name", defaultValue = "") Optional<String> name,
+                                         @RequestParam(value = "province") Optional<Province> province,Pageable pageable) {
+        Page<Product> products;
         User user = userService.findUserByEmail(getPrincipal());
-        Page<Product> products = productService.findProductsByUser(user, pageable);
+
+        if (name.isPresent() && province.isPresent()) {
+            products = productService.findAllByUserAndNameContainingAndProvince(user, name.get(), province.get(), pageable);
+        } else {
+            products = productService.findProductsByUser(user, pageable);
+        }
 
         ModelAndView modelAndView = new ModelAndView("/homestay/list");
         modelAndView.addObject("products", products);
