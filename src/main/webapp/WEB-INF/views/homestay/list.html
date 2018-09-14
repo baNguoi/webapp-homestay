@@ -45,8 +45,22 @@
         </nav>
     </div>
 </div>
-<div class="row" style="padding-top: 80px"></div>
+<div class="container">
+    <div class="row" style="padding-top: 100px">
+        <form th:action="@{/user/manager}">
+            <label>Name:</label>
+            <input type="text" name="name"/>
+
+            <label>Province:</label>
+            <select name="province">
+                <option th:each="p:${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
+            </select>
+            <input type="submit" value="Search"/>
+        </form>
+    </div>
+</div>
 <div th:replace="layout::div1"></div>
+<div th:replace="/homestay/layoutUser::div2"></div>
 <footer th:replace="/homestay/layoutUser::footer"></footer>
 </body>
 </html>

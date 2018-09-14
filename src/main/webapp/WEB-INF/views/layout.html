@@ -119,7 +119,11 @@
         $(".carousel-inner").find(".carousel-item:first").addClass("active");
     </script>
 </div>
-<section></section>
+<div th:fragment="div2" style="text-align: center; padding: 20px 0 0 0">
+    <a th:href="@{'/'(page=${products.number - 1})}" th:if="${products.hasPrevious()}" style="color:black;">Previous</a>
+    <span th:text="${products.number + 1}"></span>.......<span th:text="${products.totalPages}"></span>
+    <a th:href="@{'/'(page=${products.number + 1})}" th:if="${products.hasNext()}" style="color:black;">Next</a>
+</div>
 <footer th:fragment="footer" style="text-align: center; padding: 20px 0 20px 0">
     &copy; Nhom 3 nguoi - CodeGym 2018
 </footer>
