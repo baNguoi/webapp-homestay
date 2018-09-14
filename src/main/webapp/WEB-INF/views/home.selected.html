@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: head"></head>
-<body>
+<body class="bodyuser">
 <div class="row">
     <menu th:replace="layout :: menu"></menu>
 </div>
@@ -18,7 +18,7 @@
                     <option th:each="province:${provinces}" th:value="${province.id}"
                             th:text="${province.name}"></option>
                 </select>
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-dark">Search</button>
             </form>
         </div>
     </div>
@@ -27,7 +27,7 @@
     <div class="row">
         <th:block th:each="product:${products}">
             <div class="col-3">
-                <div class="card border-success mb-3">
+                <div class="card border-dark mb-3">
                     <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
                          data-ride="carousel" style="height: 175px">
                         <ol class="carousel-indicators">
@@ -55,7 +55,7 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
-                    <div class="card-body text-success">
+                    <div class="card-body text-dark">
                         <h5 class="card-title" th:text="${product.name}"></h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of
                             the card's content.</p>

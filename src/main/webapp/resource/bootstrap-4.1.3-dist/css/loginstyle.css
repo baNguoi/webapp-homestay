@@ -83,3 +83,8 @@ form ul li a {
 .carousel-caption {
     padding-bottom: 500px;
 }
+
+.bodyuser {
+    background-image: url("/resource/login-template/images/bg-01.jpg");
+    background-size: cover;
+}
