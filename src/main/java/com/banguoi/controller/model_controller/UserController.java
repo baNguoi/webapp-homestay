@@ -86,4 +86,32 @@ public class UserController {
         modelAndView.addObject("message", "Product created successfully");
         return modelAndView;
     }
+
+    @GetMapping("/users/update/{id}")
+    public ModelAndView showUpdateForm(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
+
+        if (user == null) {
+            return new ModelAndView("/error.404");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("/homestay/edit");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @PostMapping("/users/update")
+    public ModelAndView updateUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+        new User().validate(user, bindingResult);
+
+        if (bindingResult.hasFieldErrors()) {
+            return new ModelAndView("/homestay/edit");
+        }
+
+        userService.save(user);
+        ModelAndView modelAndView = new ModelAndView("/homestay/edit");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("message", "User updated successfully");
+        return modelAndView;
+    }
 }

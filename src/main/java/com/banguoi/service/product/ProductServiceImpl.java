@@ -68,20 +68,36 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> findAllByNameContaining(String name, Pageable pageable) {
-        Page<Product> products = productRepository.findAllByNameContaining(name, pageable);
+    public Page<Product> findAllByNameContainingAndProvince(String name, Province province, Pageable pageable) {
+        Page<Product> products = productRepository.findAllByNameContainingAndProvince(name, province, pageable);
 
         products.forEach(product -> Hibernate.initialize(product.getImages()));
         return products;
     }
 
     @Override
-    public Page<Product> findAllByBedroom(int bedroom, Pageable pageable) {
-        return productRepository.findAllByBedroom(bedroom, pageable);
+    public Page<Product> findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(String name, Province province,
+                                                                                    int bedroom, int beds,
+                                                                                    int guests, Pageable pageable) {
+        Page<Product> products =  productRepository.findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(name, province, bedroom, beds, guests, pageable);
+
+        products.forEach(product -> Hibernate.initialize(product.getImages()));
+        return products;
     }
 
     @Override
     public Page<Product> findAllByPrice(double price, Pageable pageable) {
         return productRepository.findAllByPrice(price, pageable);
+    }
+
+
+    @Override
+    public Page<Product> findAllByNameContainingAndProvinceAndBedroomAndBedsAndGuests(String name, Province province,
+                                                                                      int bedroom, int beds,
+                                                                                      int guests, Pageable pageable) {
+        Page<Product> products = productRepository.findAllByNameContainingAndProvinceAndBedroomAndBedsAndGuests(name, province, bedroom, beds, guests, pageable);
+
+        products.forEach(product -> Hibernate.initialize(product.getImages()));
+        return products;
     }
 }

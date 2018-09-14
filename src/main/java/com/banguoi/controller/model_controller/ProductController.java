@@ -55,7 +55,7 @@ public class ProductController {
         model.addAttribute("user", user);
 
         if (product.isPresent()) {
-            products = productService.findAllByNameContaining(product.get(), pageable);
+            products = productService.findAllByNameContainingAndProvince(product.get(), province.get(), pageable);
             model.addAttribute("products", products);
             return "/homestay/userSelected";
         } else if (province.isPresent()) {
