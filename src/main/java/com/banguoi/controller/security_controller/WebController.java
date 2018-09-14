@@ -52,32 +52,50 @@ public class WebController {
     }
 
     @RequestMapping(value = {"/", "home"})
-    public String home(@RequestParam(value = "name", defaultValue = "") Optional<String> name,
-                       @RequestParam(value = "province") Optional<Province> province,
-                       @RequestParam(value = "bedroom", defaultValue = "") Optional<Integer> bedroom,
-                       @RequestParam(value = "beds", defaultValue = "") Optional<Integer> beds,
-                       @RequestParam(value = "guests", defaultValue = "") Optional<Integer> guests,
+    public String home(@RequestParam(value = "province") Optional<Province> province,
                        Pageable pageable, ModelMap model) {
 
         Page<Product> products;
 
-        if (name.isPresent() && province.isPresent() && beds.isPresent() && bedroom.isPresent()) {
-            if (bedroom.get() == 0 && beds.get() == 0 && guests.get() == 0) {
-                products = productService.findAllByNameContainingAndProvince(name.get(), province.get(), pageable);
-            } else if (bedroom.get() == 0 || beds.get() == 0 || guests.get() == 0) {
-                products = productService.findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(name.get(),
-                        province.get(), bedroom.get(), beds.get(), guests.get(), pageable);
-            } else {
-                products = productService.findAllByNameContainingAndProvinceAndBedroomAndBedsAndGuests(name.get(),
-                        province.get(), bedroom.get(), beds.get(), guests.get(), pageable);
-            }
+        if (province.isPresent()) {
+            products = productService.findAllByProvince(province.get(), pageable);
             model.addAttribute("products", products);
+            model.addAttribute("province", province.get());
             return "/home.selected";
         } else {
             products = productService.findAll(pageable);
             model.addAttribute("products", products);
             return "/home";
         }
+    }
+
+    @GetMapping("/selected/{id}")
+    public String search(@PathVariable("id") Long id,
+                         @RequestParam(value = "name", defaultValue = "") Optional<String> name,
+                         @RequestParam(value = "bedroom", defaultValue = "") Optional<Integer> bedroom,
+                         @RequestParam(value = "beds", defaultValue = "") Optional<Integer> beds,
+                         @RequestParam(value = "guests", defaultValue = "") Optional<Integer> guests,
+                         Pageable pageable, ModelMap model) {
+        Page<Product> products;
+
+        Province province = provinceService.findById(id);
+
+        if (name.isPresent() && beds.isPresent() && bedroom.isPresent() && guests.isPresent()) {
+            if (bedroom.get() == 0 && beds.get() == 0 && guests.get() == 0) {
+                products = productService.findAllByNameContainingAndProvince(name.get(), province, pageable);
+            } else if (bedroom.get() == 0 || beds.get() == 0 || guests.get() == 0) {
+                products = productService.findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(name.get(),
+                        province, bedroom.get(), beds.get(), guests.get(), pageable);
+            } else {
+                products = productService.findAllByNameContainingAndProvinceAndBedroomAndBedsAndGuests(name.get(),
+                        province, bedroom.get(), beds.get(), guests.get(), pageable);
+            }
+        } else {
+            products = productService.findAllByProvince(province, pageable);
+        }
+        model.addAttribute("products", products);
+        model.addAttribute("province", province);
+        return "/home.selected";
     }
 
     @RequestMapping(value = "/user")
