@@ -47,20 +47,30 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public String showListProduct(@RequestParam("product") Optional<String> product,
-                                  @RequestParam("province") Optional<Province> province, Pageable pageable, ModelMap model) {
+    public String showListProduct(@RequestParam(value = "name", defaultValue = "") Optional<String> name,
+                                  @RequestParam(value = "province") Optional<Province> province,
+                                  @RequestParam(value = "bedroom", defaultValue = "") Optional<Integer> bedroom,
+                                  @RequestParam(value = "beds", defaultValue = "") Optional<Integer> beds,
+                                  @RequestParam(value = "guests", defaultValue = "") Optional<Integer> guests,
+                                  Pageable pageable, ModelMap model) {
         Page<Product> products;
 
         User user = userService.findUserByEmail(getPrincipal());
         model.addAttribute("user", user);
 
-        if (product.isPresent()) {
-            products = productService.findAllByNameContainingAndProvince(product.get(), province.get(), pageable);
-            model.addAttribute("products", products);
-            return "/homestay/userSelected";
-        } else if (province.isPresent()) {
-            products = productService.findAllByProvince(province.get(), pageable);
-            model.addAttribute("products", products);
+        if (name.isPresent() && province.isPresent() && beds.isPresent() && bedroom.isPresent()) {
+            if (bedroom.get() == 0 && beds.get() == 0 && guests.get() == 0) {
+                products = productService.findAllByNameContainingAndProvince(name.get(), province.get(), pageable);
+                model.addAttribute("products", products);
+            } else if (bedroom.get() == 0 || beds.get() == 0 || guests.get() == 0) {
+                products = productService.findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(name.get(),
+                        province.get(), bedroom.get(), beds.get(), guests.get(), pageable);
+                model.addAttribute("products", products);
+            } else {
+                products = productService.findAllByNameContainingAndProvinceAndBedroomAndBedsAndGuests(name.get(),
+                        province.get(), bedroom.get(), beds.get(), guests.get(), pageable);
+                model.addAttribute("products", products);
+            }
             return "/homestay/userSelected";
         } else {
             products = productService.findAll(pageable);
