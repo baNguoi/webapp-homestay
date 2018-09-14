@@ -12,16 +12,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import java.util.Optional;
 
 @Controller
+@SessionAttributes("user")
 public class WebController {
 
     @Autowired
@@ -103,7 +103,9 @@ public class WebController {
     }
 
     @RequestMapping(value = "/login")
-    public String login() {
+    public String login(@CookieValue(value = "setUser", defaultValue = "") String setUser, Model model) {
+        Cookie cookie = new Cookie("setUser", setUser);
+        model.addAttribute("cookieValue", cookie);
         return "login";
     }
 
