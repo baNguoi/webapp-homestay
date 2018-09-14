@@ -12,13 +12,15 @@
         </div>
         <div class="form-group">
             <label for="inputaddress">Address</label>
-            <input type="text" th:field="*{address}" class="form-control" id="inputaddress" placeholder="Enter address">
+            <input type="text" th:field="*{address}" class="form-control" id="inputaddress"
+                   placeholder="Apartment, studio, or floor, 1234 Main St">
         </div>
         <div class="form-group">
             <label for="selectProvince">Province </label>
-            <select th:field="*{province}" class="custom-select" id="selectProvince" required>
-                <option value="">Open this select Province</option>
-                <option th:each="province : ${provinces}" th:value="${province.id}" th:text="${province.name}"></option>
+            <select th:field="*{province}" class="custom-select form-control" id="selectProvince" required>
+                <option class="form-control" value="">Open this select Province</option>
+                <option class="form-control" th:each="province : ${provinces}" th:value="${province.id}"
+                        th:text="${province.name}"></option>
             </select>
         </div>
         <div class="form-row">
@@ -41,7 +43,12 @@
         </div>
         <div class="form-group">
             <label for="inputprice">Price</label>
-            <input type="text" th:field="*{price}" class="form-control" id="inputprice">
+            <div class="input-group">
+                <input type="text" th:field="*{price}" class="form-control" id="inputprice">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">VND</div>
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="inputdepscription">Depscription</label>
