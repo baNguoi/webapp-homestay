@@ -110,14 +110,15 @@ public class WebController {
     }
 
     @RequestMapping(value = "/admin")
-    public String admin() {
-        ModelAndView modelAndView = new ModelAndView("/adminPage");
-
+    public String admin(Pageable pageable, Model model) {
         String email = getPrincipal();
         User admin = userService.findUserByEmail(email);
 
-        modelAndView.addObject("admin", admin);
-        return "/adminPage";
+        Page<Product> products = productService.findAll(pageable);
+
+        model.addAttribute("admin", admin);
+        model.addAttribute("products", products);
+        return "admin/adminPage";
     }
 
     @RequestMapping(value = "/login")
