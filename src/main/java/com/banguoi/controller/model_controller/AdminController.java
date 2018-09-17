@@ -104,17 +104,4 @@ public class AdminController {
 
         return "redirect:/users";
     }
-
-    @GetMapping("/users/detail/{id}")
-    public ModelAndView detailUser(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-
-        if (user == null) {
-            return new ModelAndView("/error.404");
-        }
-
-        ModelAndView modelAndView = new ModelAndView("/user/detail");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
 }
