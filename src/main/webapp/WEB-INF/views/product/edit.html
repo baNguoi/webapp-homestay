@@ -1,61 +1,61 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Product</title>
-    <link rel="stylesheet" href="/resource/bootstrap-4.1.3-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resource/bootstrap-4.1.3-dist/js/bootstrap.min.js">
-    <link rel="stylesheet" href="/resource/js/popper.min.js">
-    <link rel="stylesheet" href="/resource/js/jquery-3.3.1.slim.min.js">
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="/homestay/layoutUser::head"></head>
 <body>
-<h1>Edit Product</h1>
-<p>
-    <a href="/products">Product list</a>
-</p>
-<th:block th:if="${message}">
-    <p th:text="${message}"></p>
-</th:block>
-<form th:action="@{/products/update}" th:object="${product}" method="post">
-    <input th:type="hidden" name="id" th:field="*{id}">
-    <table>
-        <tr>
-            <td>Name:</td>
-            <td><input type="text" th:field="*{name}"/></td>
-        </tr>
-        <tr>
-            <td>Province:</td>
-            <td>
-                <select th:field="*{province}">
-                    <option th:each="p:${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Bed room:</td>
-            <td><input type="text" th:field="*{bedroom}"/></td>
-        </tr>
-        <tr>
-            <td>Guests:</td>
-            <td><input type="text" th:field="*{guests}"/></td>
-        </tr>
-        <tr>
-            <td>Beds:</td>
-            <td><input type="text" th:field="*{beds}"/></td>
-        </tr>
-        <tr>
-            <td>Description:</td>
-            <td><input type="text" th:field="*{description}"/></td>
-        </tr>
-        <tr>
-            <td>Price:</td>
-            <td><input type="text" th:field="*{price}"/></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Update product"></td>
-        </tr>
-    </table>
-</form>
+<menu th:replace="/homestay/layoutUser::menu"></menu>
+<div class="container" style="padding-top: 100px">
+    <th:block th:if="${message}">
+        <p th:text="${message}"></p>
+    </th:block>
+    <form action="#" th:action="@{/products/update}" th:object="${product}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <input th:each="im:${product.images}" type="hidden" th:value="${im.id}" name="file"/>
+        <div class="form-group">
+            <label for="inputname">Name</label>
+            <input type="text" th:field="*{name}" class="form-control" id="inputname" placeholder="Name homestay">
+        </div>
+        <div class="form-group">
+            <label for="inputaddress">Address</label>
+            <input type="text" th:field="*{address}" class="form-control" id="inputaddress" placeholder="Enter address">
+        </div>
+        <div class="form-group">
+            <label for="selectProvince">Province </label>
+            <select name="province" class="custom-select" id="selectProvince" required>
+                <option value="">Open this select Province</option>
+                <option th:each="p:${provinces}" th:value="${p.id}" th:text="${p.name}"
+                        th:selected="(${p.id}==*{province.id})"></option>
+            </select>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="inputbeds">Bedroom</label>
+                <input type="number" th:field="*{bedroom}" class="form-control" id="inputbedroom">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputbeds">Beds</label>
+                <input type="number" th:field="*{beds}" class="form-control" id="inputbeds">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputbaths">Baths</label>
+                <input type="number" th:field="*{bath}" class="form-control" id="inputbaths">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="guest">Guest</label>
+                <input type="number" th:field="*{guests}" class="form-control" id="guest">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputprice">Price</label>
+            <input type="text" th:field="*{price}" class="form-control" id="inputprice">
+        </div>
+        <div class="form-group">
+            <label for="inputdepscription">Depscription</label>
+            <input type="text" th:field="*{description}" class="form-control" id="inputdepscription">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Information</button>
+    </form>
+</div>
+<footer th:replace="/homestay/layoutUser::footer"></footer>
 </body>
 </html>

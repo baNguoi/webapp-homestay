@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload Image</title>
-</head>
+<head th:replace="/homestay/layoutUser::head"></head>
 <body>
-<th:block th:if="${message}">
-    <p th:text="${message}"></p>
-</th:block>
-<h1>Upload</h1>
-<form th:action="@{/products/uploadImage((${_csrf.parameterName})=(${_csrf.token}))}" method="post"
-      th:object="${product}" enctype="multipart/form-data">
-    <input type="hidden" th:field="*{id}">
-    <table>
-        <tr>
-            <td>Image Upload:</td>
-            <td>
-                (1) : <input type="file" name="file"/><br/>
-                (2) : <input type="file" name="file"/><br/>
-                (3) : <input type="file" name="file"/><br/>
-                (4) : <input type="file" name="file"/><br/>
-                (5) : <input type="file" name="file"/><br/>
-                (6) : <input type="file" name="file"/>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="upload"></td>
-        </tr>
-    </table>
-</form>
+<menu th:replace="/homestay/layoutUser::menu"></menu>
+<div class="container">
+    <div class="row" style="padding-top: 80px">
+        <th:block th:if="${message}">
+            <h3 th:text="${message}"></h3>
+        </th:block>
+    </div>
+    <div class="row">
+        <h3>There is no have any image. Do you want to select some image?</h3>
+        <form th:action="@{/products/uploadImage((${_csrf.parameterName})=(${_csrf.token}))}" method="post"
+              th:object="${product}" enctype="multipart/form-data">
+            <input type="hidden" th:field="*{id}">
+            <table>
+                <tr>
+                    <td>Image Upload:</td>
+                    <td>
+                        (1) : <input type="file" name="file"/><br/>
+                        (2) : <input type="file" name="file"/><br/>
+                        (3) : <input type="file" name="file"/><br/>
+                        (4) : <input type="file" name="file"/><br/>
+                        (5) : <input type="file" name="file"/><br/>
+                        (6) : <input type="file" name="file"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="upload"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
 </body>
 </html>
