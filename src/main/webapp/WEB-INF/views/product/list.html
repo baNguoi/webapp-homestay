@@ -6,9 +6,6 @@
 </head>
 <body>
 <h1>User list</h1>
-<p>
-    <a href="/users/create">Create new account</a>
-</p>
 <form>
     Search user by name:
     <input type="text" name="s"/>
@@ -16,18 +13,18 @@
 </form>
 <table border="1">
     <tr>
-        <td>Name</td>
-        <td>Bedroom</td>
-        <td>Guests</td>
-        <td>Beds</td>
-        <td>Bath</td>
-        <td>Description</td>
-        <td>Price</td>
-        <td>Province</td>
-        <td>UploadImage</td>
-        <td>Edit</td>
-        <td>Delete</td>
-        <td>Views</td>
+        <th>Name</th>
+        <th>Bedroom</th>
+        <th>Guests</th>
+        <th>Beds</th>
+        <th>Bath</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Province</th>
+        <th>UploadImage</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>Views</th>
     </tr>
     <th:block th:each="product : ${products}">
         <tr>

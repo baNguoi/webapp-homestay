@@ -5,16 +5,12 @@
 <div class="row">
     <menu th:replace="layout :: menu"></menu>
 </div>
+<h2 th:text="${province.name}"></h2>
 <div class="container">
     <div class="row" style="padding-top: 100px">
-        <form>
+        <form th:action="@{/selected/__${province.id}__}">
             <label>Name:</label>
             <input type="text" name="name"/>
-
-            <label>Province:</label>
-            <select name="province">
-                <option th:each="p:${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
-            </select>
 
             <select name="bedroom">
                 <option selected value="0">Bedroom...</option>
