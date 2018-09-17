@@ -1,12 +1,18 @@
 package com.banguoi.controller.model_controller;
 
+import com.banguoi.model.Product;
+import com.banguoi.model.Province;
 import com.banguoi.model.Role;
 import com.banguoi.model.User;
+import com.banguoi.service.product.ProductService;
+import com.banguoi.service.province.ProvinceService;
 import com.banguoi.service.roles.RoleService;
 import com.banguoi.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,9 +26,20 @@ public class AdminController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private ProvinceService provinceService;
+
     @ModelAttribute("roles")
     public Iterable<Role> listRoles() {
         return roleService.findAll();
+    }
+
+    @ModelAttribute("provinces")
+    public Iterable<Province> listProvince() {
+        return provinceService.findAll();
     }
 
     @GetMapping("/users")
@@ -39,31 +56,19 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/users/create")
-    public ModelAndView showCreateForm() {
+    @GetMapping("/admin/products")
+    public String listProduct(@RequestParam("s") Optional<Province> province, Pageable pageable, Model model) {
+        Page<Product> products;
 
-        User user = new User();
-
-        ModelAndView modelAndView = new ModelAndView("/user/create");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
-
-    @PostMapping("/users/create")
-    public ModelAndView createUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        new User().validate(user, bindingResult);
-
-        if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("user/create");
+        if (province.isPresent()) {
+            products = productService.findAllByProvince(province.get(), pageable);
+        } else {
+            products = productService.findAll(pageable);
         }
-
-        userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("user/create");
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "User created successfully");
-
-        return modelAndView;
+        model.addAttribute("products", products);
+        return "/admin/list";
     }
+
 
     @PostMapping("/users/update/{id}")
     public ModelAndView updateUser(@PathVariable("id") Long id, @RequestParam("role") Role role) {
