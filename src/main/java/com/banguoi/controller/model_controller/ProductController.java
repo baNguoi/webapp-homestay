@@ -18,6 +18,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -100,21 +102,29 @@ public class ProductController {
     @GetMapping("/products/uploadImage/{id}")
     public ModelAndView showFormUpload(@PathVariable("id") Long id) {
         Product product = productService.findById(id);
+        User user = userService.findUserByEmail(getPrincipal());
 
         if (product == null) {
             return new ModelAndView("/accessDenied");
         }
 
-        ModelAndView modelAndView = new ModelAndView("/image/upload");
+        ModelAndView modelAndView = new ModelAndView("/image/editUpload");
+        modelAndView.addObject("user", user);
         modelAndView.addObject("product", product);
         return modelAndView;
     }
 
     @GetMapping("/products/update/{id}")
     public ModelAndView showFormEditProduct(@PathVariable("id") Long id) {
+        String email = getPrincipal();
+        User user = userService.findUserByEmail(email);
         Product product = productService.findById(id);
+
         if (product != null) {
+            Iterable<Image> images = imageService.findAllByProduct(product);
             ModelAndView modelAndView = new ModelAndView("/product/edit");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("images", images);
             modelAndView.addObject("product", product);
             return modelAndView;
         } else {
@@ -123,10 +133,20 @@ public class ProductController {
     }
 
     @PostMapping("/products/update")
-    public ModelAndView updateProduct(@ModelAttribute("product") Product product) {
+    public ModelAndView updateProduct(@ModelAttribute("product") Product product, @RequestParam("file") Long[] ids) {
         String email = getPrincipal();
+        User user = userService.findUserByEmail(email);
+
+        List<Image> images = new ArrayList<>();
+        for (Long id : ids) {
+            Image image = imageService.findById(id);
+            images.add(image);
+        }
+
+        product.setImages(images);
         productService.save(product, email);
         ModelAndView modelAndView = new ModelAndView("/product/edit");
+        modelAndView.addObject("user", user);
         modelAndView.addObject("product", product);
         modelAndView.addObject("message", "Product updated successfully");
         return modelAndView;
