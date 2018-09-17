@@ -84,26 +84,6 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/products/create")
-    public ModelAndView showFormCreate() {
-
-        Product product = new Product();
-        ModelAndView modelAndView = new ModelAndView("/product/create");
-        modelAndView.addObject("product", product);
-        return modelAndView;
-    }
-
-    @PostMapping("/products/create")
-    public ModelAndView createProduct(@ModelAttribute("product") Product product) {
-        String email = getPrincipal();
-        productService.save(product, email);
-
-        ModelAndView modelAndView = new ModelAndView("/image/upload");
-        modelAndView.addObject("product", product);
-        modelAndView.addObject("message", "Product created compliment");
-        return modelAndView;
-    }
-
     @GetMapping("/products/detail/{id}")
     public ModelAndView detailProduct(@PathVariable("id") Long id) {
         Product product = productService.findById(id);
