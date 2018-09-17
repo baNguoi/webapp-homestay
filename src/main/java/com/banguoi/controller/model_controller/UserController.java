@@ -73,6 +73,32 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("/users/create")
+    public ModelAndView showCreateForm() {
+
+        User user = new User();
+
+        ModelAndView modelAndView = new ModelAndView("/user/create");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @PostMapping("/users/create")
+    public ModelAndView createUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+        new User().validate(user, bindingResult);
+
+        if (bindingResult.hasFieldErrors()) {
+            return new ModelAndView("user/create");
+        }
+
+        userService.save(user);
+        ModelAndView modelAndView = new ModelAndView("user/create");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("message", "User created successfully");
+
+        return modelAndView;
+    }
+
     @GetMapping("/user/create-homestay")
     public ModelAndView showCreateHomestayForm() {
         User user = userService.findUserByEmail(getPrincipal());
