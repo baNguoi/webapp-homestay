@@ -129,7 +129,21 @@ public class UserController {
 
         ModelAndView modelAndView = new ModelAndView("/image/upload");
         modelAndView.addObject("product", product);
+        modelAndView.addObject("user", user);
         modelAndView.addObject("message", "Product created successfully");
+        return modelAndView;
+    }
+
+    @GetMapping("/user/products/detail/{id}")
+    public ModelAndView detailProduct(@PathVariable("id") Long id) {
+        Product product = productService.findById(id);
+
+        if (product == null) {
+            return new ModelAndView("/accessDenied");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("/homestay/detail");
+        modelAndView.addObject("product", product);
         return modelAndView;
     }
 
