@@ -99,6 +99,19 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("/user/detail/{id}")
+    public ModelAndView detailUser(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
+
+        if (user == null) {
+            return new ModelAndView("/error.404");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("/user/detail");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
     @GetMapping("/user/create-homestay")
     public ModelAndView showCreateHomestayForm() {
         User user = userService.findUserByEmail(getPrincipal());
@@ -128,7 +141,7 @@ public class UserController {
             return new ModelAndView("/error.404");
         }
 
-        ModelAndView modelAndView = new ModelAndView("/homestay/edit");
+        ModelAndView modelAndView = new ModelAndView("/homestay/editUser");
         modelAndView.addObject("user", user);
         return modelAndView;
     }
@@ -138,11 +151,11 @@ public class UserController {
         new User().validate(user, bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("/homestay/edit");
+            return new ModelAndView("/homestay/editUser");
         }
 
         userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("/homestay/edit");
+        ModelAndView modelAndView = new ModelAndView("/homestay/editUser");
         modelAndView.addObject("user", user);
         modelAndView.addObject("message", "User updated successfully");
         return modelAndView;
