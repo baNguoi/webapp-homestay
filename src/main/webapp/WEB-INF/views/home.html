@@ -14,13 +14,13 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" height="750px" src="/resource/image/AnhNen(1).jpg" alt="First slide">
+                    <img class="d-block w-100" height="750px" src="/resource/image/Beautiful_Inside_Home_View_Photo.jpg" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="/resource/image/AnhNen(2).jpg" height="750px" alt="Second slide">
+                    <img class="d-block w-100" src="/resource/image/82734693957c990400da6b2.36260876_e0bf56da83_1920.jpg" height="750px" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" height="750px" src="/resource/image/AnhNen(3).jpg" alt="Third slide">
+                    <img class="d-block w-100" height="750px" src="/resource/image/205014000157c990076d2f07.35070141_1229c80c3c_1920.jpg" alt="Third slide">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -33,16 +33,16 @@
             </a>
         </div>
     </div>
-    <div class="row" style="margin: 0 0 0 20% ;top: 30%; position: absolute; z-index: 999">
+    <div class="row" style="margin: 0 0 0 20% ;top: 30%; position: absolute; z-index: 999; color: whitesmoke">
         <h1>Where do we go?</h1>
     </div>
-    <div class="row" style="margin: 0 0 0 20% ;top: 45%; position: absolute; z-index: 999">
-        <form>
-            <select class="custom-select" name="province">
-                <!--<option selected value="0">Choose palace</option>-->
+    <div class="row" style="margin: 0 0 0 20% ;top: 45%;width: 70%; position: absolute; z-index: 999">
+        <form class="form-inline" style="width: 60%">
+            <select class="custom-select" style="width: 60%;background-color: rgba(240,248,255,0.63)" name="province">
+                <option selected value="0">Choose palace </option>
                 <option th:each="p:${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
             </select>
-            <button class="btn btn-dark" type="submit">Easy Rent</button>
+            <button class="btn btn-dark mx-2" type="submit">Easy Rent</button>
         </form>
     </div>
 </div>
