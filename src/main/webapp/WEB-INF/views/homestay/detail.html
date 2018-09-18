@@ -1,51 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <title>Detail Homestay</title>
-    <head th:replace="/homestay/layoutUser::head"></head>
-</head>
+      xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head"></head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="/user"><img class="logo" width="130px" height="60px" src="/resource/image/Untitled2.png"></a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div sec:authorize="isAuthenticated()">
-            <form class="form-inline my-2 my-lg-0">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/user/createHomestay">
-                            <div class="MenuItems">Add new homeStay</div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/managerHomestay">
-                            <div class="MenuItems">My homestays</div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/logout}">
-                            <div class="MenuItems">Logout</div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/user/detail/__${user.id}__}">
-                            <div class="MenuItems" th:text="${user.name}"></div>
-                        </a>
-                    </li>
-                </ul>
-            </form>
-        </div>
-    </div>
-</nav>
+<div>
+    <menu th:replace="layout :: menu"></menu>
+</div>
 <div class="row">
-    <button type="button" class="viewImage btn" data-toggle="modal" data-target="#exampleModalCenter">
-        <img class="viewImage" th:src="@{/resource/image/__${product.images[0].name}__}">
-        <span><a href="/user/editImageHomestay">Edit Image</a></span>
-    </button>
+    <div class="col-md-12 h-50">
+        <a th:href="@{#}" data-toggle="modal" data-target="#exampleModalCenter">
+            <img class="viewImage" th:src="@{/resource/image/__${product.images[0].name}__}"></a>
+    </div>
     <div class="modal fade rowSlideshow" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog model-edit">
             <div class="modal-content slideshowModal">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -54,7 +22,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner col-md-8 offset-2">
+                        <div class="carousel-inner col-md-8 offset-md-2">
                             <div class="carousel-item active">
                                 <img class="d-block w-100"
                                      th:src="@{/resource/image/__${product.images[0].name}__}">
@@ -124,10 +92,44 @@
             <input type="text" readonly class="form-control-plaintext" id="inputdescription"
                    th:value="*{description}">
         </div>
-        <div class="col-md-5"></div>
+        <div class="col-md-4 detailHomestay" th:object="${product}">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="'&#8363 ' + *{price} + ' per night'"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"
+                        th:text="'At ' + *{address} + ', ' + *{province.name}"></h6>
+                    <p class="card-text" th:text="'Phone: ' + ${user.getPhoneNumber()}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="page" style="padding-top: 100px">
+    <div class="container">
+        <div class="row" th:if="${product.images.isEmpty()}">
+            <h3>This home no have any image</h3>
+        </div>
+        <div class="row" th:unless="${product.images.isEmpty()}">
+            <th:block th:each="im:${product.images}">
+                <div class="col-lg-2 col-sm-4 col-md-3">
+                    <div class="card-group">
+                        <div class="card demonstrations">
+                            <a th:href="@{/resource/image/__${im.name}__}" class="fresco" data-fresco-group="example">
+                                <img class="card-img-top" th:src="@{/resource/image/__${im.name}__}"
+                                     height="110px" alt="Card image cap">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="padding-top: 50px">
     </div>
     <div>
-        <a th:href="@{/products/update/__${product.id}__}">Edit Product</a>
+        <a th:href="@{/products/update/__${product.id}__}">Edit information product</a>
     </div>
     <div>
         <a th:href="@{/products/uploadImage/__${product.id}__}">Delete or Upload image</a>

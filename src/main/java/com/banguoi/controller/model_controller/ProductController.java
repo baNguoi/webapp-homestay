@@ -88,12 +88,14 @@ public class ProductController {
     @GetMapping("/products/detail/{id}")
     public ModelAndView detailProduct(@PathVariable("id") Long id) {
         Product product = productService.findById(id);
+        User user = userService.findUserByEmail(getPrincipal());
 
         if (product == null) {
             return new ModelAndView("/accessDenied");
         }
 
         ModelAndView modelAndView = new ModelAndView("/product/detail");
+        modelAndView.addObject("user", user);
         modelAndView.addObject("product", product);
         return modelAndView;
     }
