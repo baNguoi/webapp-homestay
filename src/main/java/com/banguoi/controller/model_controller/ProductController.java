@@ -108,7 +108,7 @@ public class ProductController {
             return new ModelAndView("/accessDenied");
         }
 
-        ModelAndView modelAndView = new ModelAndView("/image/editUpload");
+        ModelAndView modelAndView = new ModelAndView("/image/upload");
         modelAndView.addObject("user", user);
         modelAndView.addObject("product", product);
         return modelAndView;
