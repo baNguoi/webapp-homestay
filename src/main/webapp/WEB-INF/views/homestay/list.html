@@ -57,7 +57,7 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item" th:if="${product.getImages().size()== 0}">
-                                    <a th:href="@{/user/detailHomestay/__${product.id}__}">
+                                    <a th:href="@{/user/products/detail/__${product.id}__}">
                                         <img class="d-block" src="/resource/image/ImageDefault.jpg">
                                     </a>
                                 </div>
@@ -80,7 +80,7 @@
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
-                        <a th:href="@{/user/detail/__${product.id}__}" style="text-decoration:none">
+                        <a th:href="@{/user/products/detail/__${product.id}__}" style="text-decoration:none">
                             <div class="card-body text-success">
                                 <h5 class="card-title" th:text="${product.name}"></h5>
                                 <p class="card-text"
