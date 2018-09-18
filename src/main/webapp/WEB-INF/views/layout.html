@@ -20,7 +20,7 @@
         <div class="row">
             <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
                 <div class="col-lg-4">
-                    <a class="navbar-brand" href="#"><img src="/resource/image/Untitled2.png"
+                    <a class="navbar-brand" href="/"><img src="/resource/image/Untitled2.png"
                                                           style="height: 60px; width: 130px"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent"
@@ -100,7 +100,7 @@
                                 </a>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                                <h5 class="card-title" th:text="${product.name}"></h5>
                                 <p class="card-text">This is a longer card with supporting text below as a natural
                                     lead-in
                                     to additional content. This content is a little bit longer.</p>
@@ -119,7 +119,11 @@
         $(".carousel-inner").find(".carousel-item:first").addClass("active");
     </script>
 </div>
-<section></section>
+<div th:fragment="div2" style="text-align: center; padding: 20px 0 0 0">
+    <a th:href="@{'/'(page=${products.number - 1})}" th:if="${products.hasPrevious()}" style="color:black;">Previous</a>
+    <span th:text="${products.number + 1}"></span>.......<span th:text="${products.totalPages}"></span>
+    <a th:href="@{'/'(page=${products.number + 1})}" th:if="${products.hasNext()}" style="color:black;">Next</a>
+</div>
 <footer th:fragment="footer" style="text-align: center; padding: 20px 0 20px 0">
     &copy; Nhom 3 nguoi - CodeGym 2018
 </footer>

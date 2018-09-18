@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -59,23 +60,13 @@ public class FileUploadController {
             Image image = new Image();
 
             int idA = 1;
-            if (images.size() > 0) {
-                for (Image i : images) {
-                    if (i.getName().equals(nameProduct + "(" + idA + ")" + ".jpg")) {
-                        idA++;
-                    } else {
-                        image.setName(nameProduct + "(" + idA + ")" + ".jpg");
-                        break;
-                    }
-                }
-            } else {
-                image.setName(nameProduct + "(" + idA + ")" + ".jpg");
+            for (Image im : images) {
+                im.setName(nameProduct + "(" + idA + ")" + ".jpg");
+                imageService.save(im);
+                idA++;
             }
 
-            if (image.getName() == null) {
-                image.setName(nameProduct + "(" + idA + ")" + ".jpg");
-            }
-
+            image.setName(nameProduct + "(" + idA + ")" + ".jpg");
             image.setProduct(product);
             imageService.save(image);
 

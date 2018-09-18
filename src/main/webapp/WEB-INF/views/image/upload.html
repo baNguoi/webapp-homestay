@@ -1,34 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload Image</title>
-</head>
+<head th:replace="/homestay/layoutUser::head"></head>
 <body>
-<th:block th:if="${message}">
-    <p th:text="${message}"></p>
-</th:block>
-<h1>Upload</h1>
-<form th:action="@{/products/uploadImage((${_csrf.parameterName})=(${_csrf.token}))}" method="post"
-      th:object="${product}" enctype="multipart/form-data">
-    <input type="hidden" th:field="*{id}">
-    <table>
-        <tr>
-            <td>Image Upload:</td>
-            <td>
-                (1) : <input type="file" name="file"/><br/>
-                (2) : <input type="file" name="file"/><br/>
-                (3) : <input type="file" name="file"/><br/>
-                (4) : <input type="file" name="file"/><br/>
-                (5) : <input type="file" name="file"/><br/>
-                (6) : <input type="file" name="file"/>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="upload"></td>
-        </tr>
-    </table>
-</form>
+<menu th:replace="/homestay/layoutUser::menu"></menu>
+<div class="container">
+    <div class="row" style="padding-top: 80px">
+        <th:block th:if="${message}">
+            <h3 th:text="${message}"></h3>
+        </th:block>
+    </div>
+    <div class="row" th:if="${product.images==null}">
+        <h3>There is no have any image. Do you want to select some image?</h3>
+    </div>
+    <div class="row" th:unless="${product.images==null}">
+        <th:block th:each="im:${product.images}">
+            <div class="col-lg-2 col-sm-4 col-md-3">
+                <div class="card-group">
+                    <div class="card demonstrations">
+                        <img class="card-img-top" th:src="@{/resource/image/__${im.name}__}"
+                             height="110px" alt="Card image cap">
+                        <div class="card-footer text-center">
+                            <a href="#" data-toggle="modal" th:href="${'#exampleModalCenter'+im.id}">delete image</a>
+
+                            <form th:action="@{/images/delete/__${im.id}__}" method="post">
+                                <input type="hidden" th:value="${product.id}" name="pId">
+                                <div class="modal fade" th:id="${'exampleModalCenter'+im.id}" tabindex="-1"
+                                     role="dialog"
+                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle">Are you
+                                                    sure?</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Delete image</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+    <div class="row">
+        <h2>select image</h2>
+    </div>
+    <div class="row">
+        <form th:action="@{/products/uploadImage((${_csrf.parameterName})=(${_csrf.token}))}" method="post"
+              th:object="${product}" enctype="multipart/form-data">
+            <input type="hidden" th:field="*{id}">
+            <table>
+                <tr>
+                    <td>Image Upload:</td>
+                    <td>
+                        (1) : <input type="file" name="file"/><br/>
+                        (2) : <input type="file" name="file"/><br/>
+                        (3) : <input type="file" name="file"/><br/>
+                        (4) : <input type="file" name="file"/><br/>
+                        (5) : <input type="file" name="file"/><br/>
+                        (6) : <input type="file" name="file"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="upload"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
 </body>
 </html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/homestay/layoutUser::head"></head>
+<body>
+<menu th:replace="/homestay/layoutUser::menu"></menu>
+<div class="container">
+    <div class="row" style="padding-top: 80px">
+        <h1>User detail</h1>
+        <table class="table">
+            <tr>
+                <td>Name</td>
+                <td th:text="${user.name}"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td th:text="${user.email}"></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td th:text="${user.address}"></td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td th:text="${user.age}"></td>
+            </tr>
+            <tr>
+                <td>PhoneNumber</td>
+                <td th:text="${user.phoneNumber}"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <a th:href="@{/users/update/__${user.id}__}">Edit user</a>
+    </div>
+</div>
+</body>
+</html>

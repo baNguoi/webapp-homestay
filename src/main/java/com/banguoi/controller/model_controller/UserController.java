@@ -56,12 +56,58 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/manager", method = RequestMethod.GET)
-    public ModelAndView listPostHomestay(Pageable pageable) {
+    public ModelAndView listPostHomestay(@RequestParam(value = "name", defaultValue = "") Optional<String> name,
+                                         @RequestParam(value = "province") Optional<Province> province,Pageable pageable) {
+        Page<Product> products;
         User user = userService.findUserByEmail(getPrincipal());
-        Page<Product> products = productService.findProductsByUser(user, pageable);
+
+        if (name.isPresent() && province.isPresent()) {
+            products = productService.findAllByUserAndNameContainingAndProvince(user, name.get(), province.get(), pageable);
+        } else {
+            products = productService.findProductsByUser(user, pageable);
+        }
 
         ModelAndView modelAndView = new ModelAndView("/homestay/list");
         modelAndView.addObject("products", products);
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @GetMapping("/users/create")
+    public ModelAndView showCreateForm() {
+
+        User user = new User();
+
+        ModelAndView modelAndView = new ModelAndView("/user/create");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @PostMapping("/users/create")
+    public ModelAndView createUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+        new User().validate(user, bindingResult);
+
+        if (bindingResult.hasFieldErrors()) {
+            return new ModelAndView("user/create");
+        }
+
+        userService.save(user);
+        ModelAndView modelAndView = new ModelAndView("user/create");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("message", "User created successfully");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/user/detail/{id}")
+    public ModelAndView detailUser(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
+
+        if (user == null) {
+            return new ModelAndView("/error.404");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("/user/detail");
         modelAndView.addObject("user", user);
         return modelAndView;
     }
@@ -83,7 +129,21 @@ public class UserController {
 
         ModelAndView modelAndView = new ModelAndView("/image/upload");
         modelAndView.addObject("product", product);
+        modelAndView.addObject("user", user);
         modelAndView.addObject("message", "Product created successfully");
+        return modelAndView;
+    }
+
+    @GetMapping("/user/products/detail/{id}")
+    public ModelAndView detailProduct(@PathVariable("id") Long id) {
+        Product product = productService.findById(id);
+
+        if (product == null) {
+            return new ModelAndView("/accessDenied");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("/homestay/detail");
+        modelAndView.addObject("product", product);
         return modelAndView;
     }
 
@@ -95,7 +155,7 @@ public class UserController {
             return new ModelAndView("/error.404");
         }
 
-        ModelAndView modelAndView = new ModelAndView("/homestay/edit");
+        ModelAndView modelAndView = new ModelAndView("/homestay/editUser");
         modelAndView.addObject("user", user);
         return modelAndView;
     }
@@ -105,11 +165,11 @@ public class UserController {
         new User().validate(user, bindingResult);
 
         if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("/homestay/edit");
+            return new ModelAndView("/homestay/editUser");
         }
 
         userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("/homestay/edit");
+        ModelAndView modelAndView = new ModelAndView("/homestay/editUser");
         modelAndView.addObject("user", user);
         modelAndView.addObject("message", "User updated successfully");
         return modelAndView;

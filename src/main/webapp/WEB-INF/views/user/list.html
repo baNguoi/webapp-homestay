@@ -3,9 +3,6 @@
 <head th:replace="layout::head"></head>
 <body>
 <h1>User list</h1>
-<p>
-    <a href="/users/create">Create new account</a>
-</p>
 <form th:action="@{/users}">
     Search user by name:
     <input type="text" name="s"/>
@@ -18,16 +15,16 @@
 </th:block>
 <table border="1">
     <tr>
-        <td>Name</td>
-        <td>Email</td>
-        <td>Password</td>
-        <td>Address</td>
-        <td>PhoneNumber</td>
-        <td>Age</td>
-        <td>Role</td>
-        <td>Change role</td>
-        <td>Delete</td>
-        <td>Views</td>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Address</th>
+        <th>PhoneNumber</th>
+        <th>Age</th>
+        <th>Role</th>
+        <th>Change role</th>
+        <th>Delete</th>
+        <th>Views</th>
     </tr>
     <th:block th:each="user : ${users}">
         <tr>
@@ -39,7 +36,7 @@
             <td th:text="${user.age}"></td>
             <td th:text="${user.role.roles}"></td>
             <td>
-                <a th:action="@{/#}" data-toggle="modal" th:href="${'#exampleModalCenter'+user.id}" style="color: blue">
+                <a th:action="@{/#}" data-toggle="modal" th:href="${'#exampleModalCenter'+user.id}">
                     Change role
                 </a>
                 <form th:action="@{/users/update/__${user.id}__}" method="post">
@@ -63,8 +60,8 @@
                     </div>
                 </form>
             </td>
-            <td><a th:href="@{/users/delete/__${user.id}__}" style="color: blue">delete</a></td>
-            <td><a th:href="@{/users/detail/__${user.id}__}" style="color: blue">detail</a></td>
+            <td><a th:href="@{/users/delete/__${user.id}__}">delete</a></td>
+            <td><a th:href="@{/users/detail/__${user.id}__}">detail</a></td>
         </tr>
     </th:block>
 </table>

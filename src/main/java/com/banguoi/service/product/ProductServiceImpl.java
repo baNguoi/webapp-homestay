@@ -76,6 +76,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<Product> findAllByUserAndNameContainingAndProvince(User user, String name, Province province, Pageable pageable) {
+        Page<Product> products = productRepository.findAllByUserAndNameContainingAndProvince(user, name, province, pageable);
+
+        products.forEach(product -> Hibernate.initialize(product.getImages()));
+        return products;
+    }
+
+    @Override
     public Page<Product> findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(String name, Province province,
                                                                                     int bedroom, int beds,
                                                                                     int guests, Pageable pageable) {

@@ -12,6 +12,8 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
 
     Page<Product> findAllByNameContainingAndProvince(String name, Province province, Pageable pageable);
 
+    Page<Product> findAllByUserAndNameContainingAndProvince(User user, String name, Province province, Pageable pageable);
+
     Page<Product> findAllByNameContainingAndProvinceAndBedroomOrBedsOrGuests(String name,
                                                                              Province province,
                                                                              int bedroom, int beds,
