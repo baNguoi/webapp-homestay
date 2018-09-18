@@ -1,6 +1,9 @@
 package com.banguoi.controller.model_controller;
 
-import com.banguoi.model.*;
+import com.banguoi.model.Product;
+import com.banguoi.model.Province;
+import com.banguoi.model.Role;
+import com.banguoi.model.User;
 import com.banguoi.service.product.ProductService;
 import com.banguoi.service.province.ProvinceService;
 import com.banguoi.service.roles.RoleService;
@@ -11,11 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -85,5 +85,20 @@ public class UserController {
         modelAndView.addObject("product", product);
         modelAndView.addObject("message", "Product created successfully");
         return modelAndView;
+    }
+
+    @GetMapping("/user/detailHomestay/{id}")
+    public ModelAndView displayDetailHomestay(@PathVariable("id") Long id) {
+        User user = userService.findUserByEmail(getPrincipal());
+        Product product = productService.findById(id);
+
+        if (product == null) {
+            return new ModelAndView("accessDenied");
+        }
+
+        ModelAndView displayDetailHomestayModelAndView = new ModelAndView("/homestay/detail");
+        displayDetailHomestayModelAndView.addObject("product", product);
+        displayDetailHomestayModelAndView.addObject("user", user);
+        return displayDetailHomestayModelAndView;
     }
 }
