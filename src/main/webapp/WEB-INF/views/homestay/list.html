@@ -46,7 +46,7 @@
     <div class="row">
         <th:block th:each="product:${products}">
             <div class="col-3">
-                <a th:href="@{/user/detailHomestay/__${product.id}__}">
+                <a th:href="@{/user/products/detail/__${product.id}__}">
                     <div class="card border-success mb-3">
                         <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
                              data-ride="carousel">

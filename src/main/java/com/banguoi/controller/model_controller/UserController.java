@@ -35,9 +35,6 @@ public class UserController {
     @Autowired
     private ProvinceService provinceService;
 
-    @Autowired
-    private RoleService roleService;
-
     @ModelAttribute("provinces")
     public Iterable<Province> findAllProvince() {
         return provinceService.findAll();
