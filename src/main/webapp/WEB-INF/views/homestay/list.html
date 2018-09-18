@@ -47,7 +47,7 @@
     <div class="row">
         <th:block th:each="product:${products}">
             <div class="col-3">
-                <a th:href="@{/user/detail/__${product.id}__}">
+                <a th:href="@{/user/detailHomestay/__${product.id}__}">
                     <div class="card border-success mb-3">
                         <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
                              data-ride="carousel">
@@ -81,7 +81,7 @@
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
-                        <a th:href="@{/user/detailHomestay/__${product.id}__}" style="text-decoration:none">
+                        <a th:href="@{/user/detail/__${product.id}__}" style="text-decoration:none">
                             <div class="card-body text-success">
                                 <h5 class="card-title" th:text="${product.name}"></h5>
                                 <p class="card-text"
