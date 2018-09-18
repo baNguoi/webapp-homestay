@@ -121,10 +121,8 @@ public class ProductController {
         Product product = productService.findById(id);
 
         if (product != null) {
-            Iterable<Image> images = imageService.findAllByProduct(product);
             ModelAndView modelAndView = new ModelAndView("/product/edit");
             modelAndView.addObject("user", user);
-            modelAndView.addObject("images", images);
             modelAndView.addObject("product", product);
             return modelAndView;
         } else {
@@ -133,17 +131,13 @@ public class ProductController {
     }
 
     @PostMapping("/products/update")
-    public ModelAndView updateProduct(@ModelAttribute("product") Product product, @RequestParam("file") Long[] ids) {
+    public ModelAndView updateProduct(@ModelAttribute("product") Product product) {
         String email = getPrincipal();
         User user = userService.findUserByEmail(email);
 
-        List<Image> images = new ArrayList<>();
-        for (Long id : ids) {
-            Image image = imageService.findById(id);
-            images.add(image);
-        }
+        Iterable<Image> images = imageService.findAllByProduct(product);
+        product.setImages((List<Image>) images);
 
-        product.setImages(images);
         productService.save(product, email);
         ModelAndView modelAndView = new ModelAndView("/product/edit");
         modelAndView.addObject("user", user);
