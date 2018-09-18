@@ -62,9 +62,32 @@ form ul li a {
     height: 280px;
 }
 
+.logo{
+    height: 60px;
+    width: 130px;
+}
+
 .carousel-caption {
     padding-bottom: 500px;
 }
+
+.card-img-top .d-block{
+    height: 175px;
+}
+
+.card-body{
+    padding: 0px 10px 0px 10px;
+}
+
+.card-title {
+    margin: 10px 0px 0px 0px;
+}
+
+.card-text{
+ margin: 0px 0px 0px 0px;
+}
+
+
 
 .bodyuser {
     background-image: url("/resource/login-template/images/bg-01.jpg");
