@@ -10,7 +10,7 @@
         </th:block>
     </div>
     <div class="row" th:if="${product.images==null}">
-        <h3>There is no have any image. Do you want to select some image?</h3>
+        <h3>There is no have any image. Do you want to add some image?</h3>
     </div>
     <div class="row" th:unless="${product.images==null}">
         <th:block th:each="im:${product.images}">
@@ -30,15 +30,15 @@
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalCenterTitle">Are you
-                                                    sure?</h5>
+                                                <h5 class="modal-title text-danger" id="exampleModalCenterTitle">Are you
+                                                    sure want to delete?</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                ...
+                                                <img th:src="@{/resource/image/__${im.name}__}" height="250px">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
@@ -57,28 +57,50 @@
         </th:block>
     </div>
     <div class="row">
-        <h2>select image</h2>
+        <h3 class="text-success">Add image</h3>
     </div>
     <div class="row">
         <form th:action="@{/products/uploadImage((${_csrf.parameterName})=(${_csrf.token}))}" method="post"
               th:object="${product}" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}">
-            <table>
+            <table class="table">
+                <caption>List of images</caption>
+                <thead>
                 <tr>
-                    <td>Image Upload:</td>
-                    <td>
-                        (1) : <input type="file" name="file"/><br/>
-                        (2) : <input type="file" name="file"/><br/>
-                        (3) : <input type="file" name="file"/><br/>
-                        (4) : <input type="file" name="file"/><br/>
-                        (5) : <input type="file" name="file"/><br/>
-                        (6) : <input type="file" name="file"/>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">Image Upload</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td><input type="file" name="file"/></td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <th scope="row">2</th>
+                    <td><input type="file" name="file"/></td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td><input type="file" name="file"/></td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td><input type="file" name="file"/></td>
+                </tr>
+                <tr>
+                    <th scope="row">5</th>
+                    <td><input type="file" name="file"/></td>
+                </tr>
+                <tr>
+                    <th scope="row">6</th>
+                    <td><input type="file" name="file"/></td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
                     <td><input type="submit" value="upload"></td>
                 </tr>
+                </tbody>
             </table>
         </form>
     </div>

@@ -135,6 +135,70 @@
             </div>
         </div>
     </div>
+    <div>
+        <a href="#" data-toggle="modal" th:href="${'#exampleModalCenter'+product.id}">Delete homeStay</a>
+
+        <form th:action="@{/products/delete/__${product.id}__}" method="post">
+            <input type="hidden" th:value="${product.id}" name="pId">
+            <div class="modal fade" th:id="${'exampleModalCenter'+product.id}" tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-danger" id="exampleModalCenterTitle">Are you
+                                sure want to delete?</h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h3>HomeStay information</h3>
+                            <table class="table">
+                                <tbody>
+                                <tr class="table-primary">
+                                    <th>Name</th>
+                                    <td th:text="${product.name}"></td>
+                                </tr>
+                                <tr class="table-secondary">
+                                    <th>Address</th>
+                                    <td th:text="${product.address}"></td>
+                                </tr>
+                                <tr class="table-success">
+                                    <th>Bedroom</th>
+                                    <td th:text="${product.bedroom}"></td>
+                                </tr>
+                                <tr class="table-danger">
+                                    <th>Beds</th>
+                                    <td th:text="${product.beds}"></td>
+                                </tr>
+                                <tr class="table-warning">
+                                    <th>Bath</th>
+                                    <td th:text="${product.bath}"></td>
+                                </tr>
+                                <tr class="table-info">
+                                    <th>Guests</th>
+                                    <td th:text="${product.guests}"></td>
+                                </tr>
+                                <tr class="table-success">
+                                    <th>Price</th>
+                                    <td th:text="${product.price}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">Close
+                            </button>
+                            <button type="submit" class="btn btn-primary">Delete homeStay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 <footer th:replace="/homestay/layoutUser::footer"></footer>
 </body>
