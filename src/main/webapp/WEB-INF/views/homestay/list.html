@@ -7,31 +7,30 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="#"><img class="logo" src="/resource/image/Untitled2.png"></a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline my-2 my-lg-0" style="padding: 0 300px 0 40px" action="/products">
-            <input class="form-control mr-sm-2" type="text" name="product" placeholder="Search by name"
-                   aria-label="Search"/>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <div sec:authorize="isAuthenticated()">
-            <form class="form-inline my-2 my-lg-0">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/user/createHomestay">
-                            <div class="MenuItems">Add new homeStay</div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/logout}">
-                            <div class="MenuItems">Logout</div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/user/detail/__${user.id}__}">
-                            <div class="MenuItems" th:text="${user.name}"></div>
-                        </a>
-                    </li>
-                </ul>
-            </form>
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div sec:authorize="isAuthenticated()">
+                <form class="form-inline my-2 my-lg-0">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/user/createHomestay">
+                                <div class="MenuItems">Add new homeStay</div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/logout}">
+                                <div class="MenuItems">Logout</div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/user/detail/__${user.id}__}">
+                                <div class="MenuItems" th:text="${user.name}"></div>
+                            </a>
+                        </li>
+                    </ul>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
@@ -63,7 +62,7 @@
                                     </a>
                                 </div>
                                 <div class="carousel-item" th:each="im:${product.images}">
-                                    <a th:href="@{/user/detailHomestay/__${product.id}__}">
+                                    <a th:href="@{/user/products/detail/__${product.id}__}">
                                         <img class="d-block w-100" th:src="@{/resource/image/__${im.name}__}">
                                     </a>
                                 </div>
@@ -85,9 +84,9 @@
                             <div class="card-body text-success">
                                 <h5 class="card-title" th:text="${product.name}"></h5>
                                 <p class="card-text"
-                                   th:text="${'Form: &#8363;'+ product.price + ' per night'}">
+                                   th:text="${'Form: &#8363;'+product.price+' per night'}">
                                 <p class="card-text"
-                                   th:text="${'At: ' + product.address + ' ' + product.province.name}"></p>
+                                   th:text="${'At: '+product.address+' '+product.province.name}"></p>
                                 </p>
                             </div>
                         </a>

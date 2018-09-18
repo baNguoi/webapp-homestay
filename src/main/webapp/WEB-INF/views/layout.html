@@ -60,7 +60,7 @@
     <div class="container" style="padding-top: 30px">
         <div class="row">
             <th:block th:each="product:${products}">
-                <div class="col-lg-3 col-sm-12 col-md-6">
+                <div class="col-lg-3 col-sm-12 col-md-6" style="margin-bottom: 25px">
                     <div class="card-deck">
                         <div class="card">
                             <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
@@ -103,7 +103,6 @@
                                 <h4 class="card-title"><b th:text="${product.name}"></b></h4>
                                 <p class="card-text">Location: <b th:text="${product.province.name}"></b></p>
                                 <p class="card-text">Price ~ <b><i th:text="${product.price} + ' &#8363'"></i></b></p>
-
                             </div>
                         </div>
                     </div>

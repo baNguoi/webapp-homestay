@@ -187,19 +187,4 @@ public class UserController {
         modelAndView.addObject("message", "User updated successfully");
         return modelAndView;
     }
-
-//    @GetMapping("/user/detailHomestay/{id}")
-//    public ModelAndView displayDetailHomestay(@PathVariable("id") Long id) {
-//        User user = userService.findUserByEmail(getPrincipal());
-//        Product product = productService.findById(id);
-//
-//        if (product == null) {
-//            return new ModelAndView("accessDenied");
-//        }
-//
-//        ModelAndView displayDetailHomestayModelAndView = new ModelAndView("/homestay/detail");
-//        displayDetailHomestayModelAndView.addObject("product", product);
-//        displayDetailHomestayModelAndView.addObject("user", user);
-//        return displayDetailHomestayModelAndView;
-//    }
 }

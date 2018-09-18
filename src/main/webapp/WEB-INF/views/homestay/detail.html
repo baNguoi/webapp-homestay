@@ -95,10 +95,9 @@
         <div class="col-md-4 detailHomestay" th:object="${product}">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="'&#8363 ' + *{price} + ' per night'"></h5>
-                    <h6 class="card-subtitle mb-2 text-muted"
-                        th:text="'At ' + *{address} + ', ' + *{province.name}"></h6>
-                    <p class="card-text" th:text="'Phone: ' + ${user.getPhoneNumber()}"></p>
+                    <h5 th:text="'&#8363 ' + *{price} + ' per night'"></h5>
+                    <p th:text="'At ' + *{address} + ', ' + *{province.name}"></p>
+                    <p th:text="'Phone: ' + ${product.user.phoneNumber}"></p>
                 </div>
             </div>
         </div>
