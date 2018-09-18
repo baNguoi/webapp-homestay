@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>User list</h1>
+<form>
+    Search user by name:
+    <input type="text" name="s"/>
+    <input type="submit" value="Search"/>
+</form>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Bedroom</th>
+        <th>Guests</th>
+        <th>Beds</th>
+        <th>Bath</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Province</th>
+        <th>UploadImage</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>Views</th>
+    </tr>
+    <th:block th:each="product : ${products}">
+        <tr>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.bedroom}"></td>
+            <td th:text="${product.guests}"></td>
+            <td th:text="${product.beds}"></td>
+            <td th:text="${product.bath}"></td>
+            <td th:text="${product.description}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.province.name}"></td>
+            <td><a th:href="@{/products/uploadImage/__${product.id}__}">uploadImage</a></td>
+            <td><a th:href="@{/products/update/__${product.id}__}">edit</a></td>
+            <td><a th:href="@{/products/delete/__${product.id}__}">delete</a></td>
+            <td><a th:href="@{/products/detail/__${product.id}__}">detail</a></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

@@ -1,10 +1,14 @@
 package com.banguoi.model;
 
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Validator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,17 +18,20 @@ public class User {
     private String email;
     private String password;
     private String address;
-    private String age;
+    private int age;
     private String phoneNumber;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @OneToMany(targetEntity = Product.class)
+    private List<Product> products;
+
     public User() {
     }
 
-    public User(String name, String email, String password, String address, String age, String phoneNumber) {
+    public User(String name, String email, String password, String address, int age, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -73,11 +80,11 @@ public class User {
         this.address = address;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -97,7 +104,67 @@ public class User {
         this.role = role;
     }
 
-    public boolean index(String name, String password) {
-        return this.name.equals(name) && this.password.equals(password);
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public boolean index(String email, String password) {
+        return this.email.equals(email) && this.password.equals(password);
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return User.class.isAssignableFrom(clazz);
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        User user = (User) target;
+
+        String name = user.getName();
+        ValidationUtils.rejectIfEmpty(errors, "name", "name.empty");
+        if (name.length() < 5) {
+            errors.rejectValue("name", "name.length");
+        }
+
+        String email = user.getEmail();
+        ValidationUtils.rejectIfEmpty(errors, "email", "email.empty");
+        if (!email.matches("(^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$)")) {
+            errors.rejectValue("email", "email.matches");
+        }
+
+        String password = user.getPassword();
+        ValidationUtils.rejectIfEmpty(errors, "password", "password.empty");
+        if (password.length() < 6) {
+            errors.rejectValue("password", "password.length");
+        }
+
+        if (!password.matches("(^[A-Za-z0-9]*[0-9|A-Z]+[A-Za-z0-9]*$)")) {
+            errors.rejectValue("password", "password.matches");
+        }
+
+        ValidationUtils.rejectIfEmpty(errors, "address", "address.empty");
+
+        String phoneNumber = user.getPhoneNumber();
+        if (phoneNumber.length() > 11 || phoneNumber.length() < 10) {
+            errors.rejectValue("phoneNumber", "phone.length");
+        }
+
+        if (!phoneNumber.startsWith("0")) {
+            errors.rejectValue("phoneNumber", "phoneStartsWith");
+        }
+
+        if (!phoneNumber.matches("(^$|[0-9]*$)")) {
+            errors.rejectValue("phoneNumber", "phone.matches");
+        }
+
+        int age = user.getAge();
+        if (age < 18) {
+            errors.rejectValue("age", "age.min");
+        }
     }
 }

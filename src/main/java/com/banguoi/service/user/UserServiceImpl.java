@@ -15,8 +15,13 @@ public class UserServiceImpl implements UserService {
     private RolesRepository roleRepository;
 
     @Override
-    public User findUserByName(String name) {
-        return userRepository.findUserByName(name);
+    public Iterable<User> findUserByNameContaining(String name) {
+        return userRepository.findUserByNameContaining(name);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
@@ -32,7 +37,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         Role userRole = roleRepository.findByRoles("ROLE_USER");
-        user.setRole(userRole);
+        if (user.getRole() == null) {
+            user.setRole(userRole);
+        }
         userRepository.save(user);
     }
 

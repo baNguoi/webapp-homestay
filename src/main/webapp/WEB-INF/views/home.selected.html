@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body class="bodyuser">
+<div class="row">
+    <menu th:replace="layout :: menu"></menu>
+</div>
+<div class="container" style="margin-top: 80px">
+    <div class="row">
+        <div class="col-12">
+            <h2>Here we go :</h2>
+        </div>
+    </div>
+    <div class="row" style="padding-bottom: 30px">
+        <div class="col-5">
+            <h3 th:text="${province.name}"></h3>
+        </div>
+    </div>
+    <div class="row">
+        <form th:action="@{/selected/__${province.id}__}">
+            <div class="form-group">
+                <input type="search" class="form-control" name="name" placeholder="Enter homestay's name"/>
+            </div>
+            <p></p>
+            <div class="form-group">
+                <select class="custom-select" name="bedroom">
+                    <option selected value="0">Bedroom...</option>
+                    <option value="1">1 bedroom</option>
+                    <option value="2">2 bedroom</option>
+                    <option value="3">3 bedroom</option>
+                    <option value="4">4 bedroom</option>
+                    <option value="5">5 bedroom</option>
+                    <option value="6">6 bedroom</option>
+                </select>
+            </div>
+            <p></p>
+            <div class="form-group">
+                <select class="custom-select" name="beds">
+                    <option selected value="0">Beds...</option>
+                    <option value="1">1 Beds</option>
+                    <option value="2">2 Beds</option>
+                    <option value="3">3 Beds</option>
+                    <option value="4">4 Beds</option>
+                    <option value="5">5 Beds</option>
+                    <option value="6">6 Beds</option>
+                </select>
+            </div>
+            <p></p>
+            <div class="form-group">
+                <select class="custom-select" name="guests">
+                    <option selected value="0">Guests...</option>
+                    <option value="1">1 Guests</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5">5 Guests</option>
+                    <option value="7">6 Guests</option>
+                    <option value="8">7 Guests</option>
+                    <option value="9">8 Guests</option>
+                    <option value="10">6 Guests</option>
+                </select>
+            </div>
+            <button class="btn btn-dark" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+<div th:replace="layout::div1"></div>
+<footer th:replace="layout::footer"></footer>
+</body>
+</html>

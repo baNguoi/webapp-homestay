@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new role</title>
+</head>
+<body>
+<h1>Create new role</h1>
+<p>
+    <a href="/roles">Back to role list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/roles/create}" th:object="${role}" method="post" novalidate="novalidate">
+    <input type="hidden" th:field="*{id}"/>
+    <table>
+        <tr>
+            <td>Role:</td>
+            <td><input type="text" th:field="*{roles}"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Create role"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

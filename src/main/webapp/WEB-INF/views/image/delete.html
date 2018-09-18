@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete image</title>
+</head>
+<body>
+<h1>Delete image</h1>
+<h2>Are you sure?</h2>
+<form action="" th:action="@{/images/delete}" method="post" th:object="${image}">
+    <input type="hidden" th:field="*{id}"/>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td th:text="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Product</td>
+            <td th:text="*{product.name}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" th:value="delete"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

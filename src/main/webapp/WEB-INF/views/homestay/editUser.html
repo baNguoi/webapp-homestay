@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sign up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="../../../resource/create-template/images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="../../../resource/create-template/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="../../../resource/create-template/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="../../../resource/create-template/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="../../../resource/create-template/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../../resource/create-template/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="../../../resource/create-template/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="../../../resource/create-template/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../../resource/create-template/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+          href="../../../resource/create-template/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../../resource/create-template/css/util.css">
+    <link rel="stylesheet" type="text/css" href="../../../resource/create-template/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body style="background-color: #999999;">
+<menu th:replace="/homestay/layoutUser::menu"></menu>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="login100-more"
+             style="background-image: url('../../../resource/login-template/images/bg-01.jpg');"></div>
+
+        <div class="wrap-login100 p-l-50 p-r-50 p-t-150 p-b-50">
+            <form class="login100-form validate-form" th:action="@{/users/update}" th:object="${user}" method="post">
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{email}"/>
+                <input type="hidden" th:field="*{password}"/>
+                <span class="login100-form-title p-b-59">Edit User</span>
+                <th:block th:if="${message}">
+                    <span th:text="${message}" style="color: #6f42c1"></span>
+                </th:block>
+                <div class="wrap-input100 validate-input" data-validate="Name not empty and not less than 5 character">
+                    <span class="label-input100">Full Name</span>
+                    <input class="input100" type="text" placeholder="Name..." th:field="*{name}">
+                    <span class="focus-input100"></span>
+                    <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></small>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Address not empty">
+                    <span class="label-input100">Address</span>
+                    <input class="input100" type="text" th:field="*{address}"/>
+                    <span class="focus-input100"></span>
+                    <small th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></small>
+                </div>
+
+                <div class="wrap-input100 validate-input"
+                     data-validate="Length for phone form 10 to 11 number and star with 0">
+                    <span class="label-input100">Phone number</span>
+                    <input class="input100" type="text" th:field="*{phoneNumber}">
+                    <span class="focus-input100"></span>
+                    <small th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                           class="text-danger"></small>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Age is over 18 years old">
+                    <span class="label-input100">Age</span>
+                    <input class="input100" type="text" th:field="*{age}">
+                    <span class="focus-input100"></span>
+                    <small th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="text-danger"></small>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button type="submit" class="login100-form-btn">
+                            Edit User
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--===============================================================================================-->
+<script src="../../../resource/create-template/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../../resource/create-template/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../../resource/create-template/vendor/bootstrap/js/popper.js"></script>
+<script src="../../../resource/create-template/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../../resource/create-template/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="../../../resource/create-template/vendor/daterangepicker/moment.min.js"></script>
+<script src="../../../resource/create-template/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="../../../resource/create-template/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="../../../resource/create-template/js/main.js"></script>
+
+</body>
+</html>

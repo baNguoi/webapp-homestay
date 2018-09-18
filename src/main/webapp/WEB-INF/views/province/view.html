@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View province</title>
+</head>
+<body>
+<h1>View province: <span th:text="${province.name}"></span></h1>
+<a href="/provinces">Province list</a>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Bedroom</th>
+        <th>Guests</th>
+        <th>Beds</th>
+        <th>Bath</th>
+        <th>Description</th>
+        <th>Price</th>
+    </tr>
+    <th:block th:each="product : ${products}">
+        <tr>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.province.name}"></td>
+            <td th:text="${product.bedroom}"></td>
+            <td th:text="${product.guests}"></td>
+            <td th:text="${product.beds}"></td>
+            <td th:text="${product.bath}"></td>
+            <td th:text="${product.description}"></td>
+            <td th:text="${product.price}"></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

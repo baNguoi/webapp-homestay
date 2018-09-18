@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::head"></head>
+<body>
+<h1>User list</h1>
+<form th:action="@{/users}">
+    Search user by name:
+    <input type="text" name="s"/>
+    <input type="submit" value="Search"/>
+</form>
+<br/>
+<th:block th:if="${message}">
+    <p>Account name <b th:text="${user.name}"></b> chang role to <b th:text="${user.role.roles}"></b> <span
+            th:text="${message}"></span></p>
+</th:block>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Address</th>
+        <th>PhoneNumber</th>
+        <th>Age</th>
+        <th>Role</th>
+        <th>Change role</th>
+        <th>Delete</th>
+        <th>Views</th>
+    </tr>
+    <th:block th:each="user : ${users}">
+        <tr>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.address}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.age}"></td>
+            <td th:text="${user.role.roles}"></td>
+            <td>
+                <a th:action="@{/#}" data-toggle="modal" th:href="${'#exampleModalCenter'+user.id}">
+                    Change role
+                </a>
+                <form th:action="@{/users/update/__${user.id}__}" method="post">
+                    <div class="modal fade" th:id="${'exampleModalCenter'+user.id}" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content" style="width: 250px">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" th:id="${'exampleModalCenter'+user.id}">Change role</h3>
+                                </div>
+                                <div class="modal-body" th:each="r:${roles}">
+                                    <input type="radio" name="role" id="male" th:value="${r.id}"
+                                           th:text="${r.roles}" th:checked="(${r.id}==${user.role.id})"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </td>
+            <td><a th:href="@{/users/delete/__${user.id}__}">delete</a></td>
+            <td><a th:href="@{/users/detail/__${user.id}__}">detail</a></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

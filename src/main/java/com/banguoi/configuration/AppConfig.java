@@ -1,19 +1,29 @@
 package com.banguoi.configuration;
 
 import com.banguoi.formatter.RoleFormatter;
+import com.banguoi.service.image.ImageService;
+import com.banguoi.service.image.ImageServiceImpl;
+import com.banguoi.service.product.ProductService;
+import com.banguoi.service.product.ProductServiceImpl;
+import com.banguoi.service.province.ProvinceService;
+import com.banguoi.service.province.ProvinceServiceImpl;
 import com.banguoi.service.roles.RoleService;
 import com.banguoi.service.roles.RoleServiceImpl;
 import com.banguoi.service.user.UserService;
 import com.banguoi.service.user.UserServiceImpl;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
@@ -22,6 +32,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
@@ -49,29 +60,12 @@ import java.util.Properties;
 public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
-//    private String jdbc = ;
-//
-//    private String username = ;
-//
-//    private String password = ;
-
-    @Value("${jdbc.url}")
-    private String jdbc;
-
-    @Value("${jdbc.username}")
-    private String username;
-
-    @Value("${jdbc.password}")
-    private String password;
+    @Autowired
+    private Environment environment;
 
     @Bean
     public UserService userService() {
         return new UserServiceImpl();
-    }
-
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addFormatter(new RoleFormatter(applicationContext.getBean(RoleService.class)));
     }
 
     @Bean
@@ -80,9 +74,36 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     }
 
     @Bean
+    public ProductService productService() {
+        return new ProductServiceImpl();
+    }
+
+    @Bean
+    public ProvinceService provinceService() {
+        return new ProvinceServiceImpl();
+    }
+
+    @Bean
+    public ImageService imageService() {
+        return new ImageServiceImpl();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new RoleFormatter(applicationContext.getBean(RoleService.class)));
+    }
+
+    @Bean
     public ViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
 
@@ -123,6 +144,10 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
     @Bean
     public DataSource dataSource(){
+        String jdbc = environment.getProperty("jdbc.url");
+        String username = environment.getProperty("jdbc.username");
+        String password = environment.getProperty("jdbc.password");
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl(jdbc);
@@ -138,7 +163,7 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         return transactionManager;
     }
 
-    Properties additionalProperties() {
+    private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
@@ -153,5 +178,17 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resource/**").addResourceLocations("/resource/");
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasenames("message");
+        return messageSource;
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }

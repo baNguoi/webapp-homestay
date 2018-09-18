@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="/homestay/layoutUser::head"></head>
+<body class="bodyuser">
+<div class="container">
+    <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="col-lg-4">
+                <a class="navbar-brand" href="/user"><img src="/resource/image/Untitled2.png"
+                                                      style="height: 60px; width: 130px"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div sec:authorize="isAuthenticated()">
+                        <form class="form-inline my-2 my-lg-0">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/user/create-homestay">
+                                        <div class="MenuItems">Add new homeStay</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/logout}">
+                                        <div class="MenuItems">Logout</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/user/detail/__${user.id}__}">
+                                        <div class="MenuItems" th:text="${user.name}"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="padding-top: 100px">
+        <form th:action="@{/user/manager}">
+            <label>Name:</label>
+            <input type="text" name="name"/>
+
+            <label>Province:</label>
+            <select name="province">
+                <option th:each="p:${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
+            </select>
+            <input type="submit" value="Search"/>
+        </form>
+    </div>
+</div>
+<div class="container" style="padding-top: 30px">
+    <div class="row">
+        <th:block th:each="product:${products}">
+            <div class="col-lg-3 col-sm-12 col-md-6">
+                <div class="card-deck">
+                    <div class="card">
+                        <div th:id="${'carouselExampleIndicators'+product.id}" class="card-img-top carousel slide"
+                             data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="0"></li>
+                                <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="1"></li>
+                                <li th:href="${'#carouselExampleIndicators'+product.id}" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner" th:if="${product.images.isEmpty()}">
+                                <div class="carousel-item">
+                                    <a th:href="@{/user/products/detail/__${product.id}__}">
+                                        <img class="d-block w-100" th:src="@{/resource/image/AnhNen(1).jpg}"
+                                             height="180px">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="carousel-inner" th:unless="${product.images.isEmpty()}">
+                                <div class="carousel-item" th:each="im:${product.images}">
+                                    <a th:href="@{/user/products/detail/__${product.id}__}">
+                                        <img class="d-block w-100" th:src="@{/resource/image/__${im.name}__}"
+                                             height="180px">
+                                    </a>
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" th:href="${'#carouselExampleIndicators'+product.id}"
+                               role="button"
+                               data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" th:href="${'#carouselExampleIndicators'+product.id}"
+                               role="button"
+                               data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${product.name}"></h5>
+                            <p class="card-text">This is a longer card with supporting text below as a natural
+                                lead-in
+                                to additional content. This content is a little bit longer.</p>
+                            <p class="card-text">
+                                <small class="text-muted">Last updated 3 mins ago</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</div>
+<script>
+    $("ol li").first().addClass("active");
+    $(".carousel-inner").find(".carousel-item:first").addClass("active");
+</script>
+<div th:replace="/homestay/layoutUser::div2"></div>
+<footer th:replace="/homestay/layoutUser::footer"></footer>
+</body>
+</html>
