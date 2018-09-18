@@ -119,7 +119,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/user/create-homestay")
+    @GetMapping("/user/createHomestay")
     public ModelAndView showCreateHomestayForm() {
         User user = userService.findUserByEmail(getPrincipal());
         Product product = new Product();
