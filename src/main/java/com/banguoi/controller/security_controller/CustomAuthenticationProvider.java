@@ -13,7 +13,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,10 +24,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private UserService userService;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    List<User> users = new ArrayList<>();
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        List<User> users = new ArrayList<>();
+
         Iterable<User> us = userService.findAll();
         for (User u : us) {
             users.add(u);
@@ -45,11 +45,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        optionalUser.get().setRole(userService.findUserByEmail(email).getRole());
         grantedAuthorities.add(new SimpleGrantedAuthority(optionalUser.get().getRole().getRoles()));
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(email, password,
                 grantedAuthorities);
 
-        logger.info("Succesful Authentication with user = " + email);
+        logger.info("Successfully Authentication with user = " + email);
         return auth;
     }
 
