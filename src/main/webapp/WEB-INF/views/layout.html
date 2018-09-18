@@ -13,6 +13,7 @@
     <script type="text/javascript" src="/resource/slideshow-ligthbox/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/resource/slideshow-ligthbox/js/fresco.js"></script>
     <link rel="stylesheet" type="text/css" href="/resource/slideshow-ligthbox/css/fresco/fresco.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 <menu th:fragment="menu">
@@ -100,13 +101,10 @@
                                 </a>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title" th:text="${product.name}"></h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in
-                                    to additional content. This content is a little bit longer.</p>
-                                <p class="card-text">
-                                    <small class="text-muted">Last updated 3 mins ago</small>
-                                </p>
+                                <h4 class="card-title"><b th:text="${product.name}"></b></h4>
+                                <p class="card-text">Location: <b th:text="${product.province.name}"></b></p>
+                                <p class="card-text">Price ~ <b><i th:text="${product.price} + ' &#8363'"></i></b></p>
+
                             </div>
                         </div>
                     </div>
