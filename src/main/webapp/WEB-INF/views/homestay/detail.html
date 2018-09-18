@@ -124,16 +124,13 @@
             <input type="text" readonly class="form-control-plaintext" id="inputdescription"
                    th:value="*{description}">
         </div>
-        <div class="col-md-4 detailHomestay" th:object="${product}">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="'&#8363 ' + *{price} + ' per night'"></h5>
-                    <h6 class="card-subtitle mb-2 text-muted"
-                        th:text="'At ' + *{address} + ', ' + *{province.name}"></h6>
-                    <p class="card-text" th:text="'Phone: ' + ${user.getPhoneNumber()}"></p>
-                </div>
-            </div>
-        </div>
+        <div class="col-md-5"></div>
+    </div>
+    <div>
+        <a th:href="@{/products/update/__${product.id}__}">Edit Product</a>
+    </div>
+    <div>
+        <a th:href="@{/products/uploadImage/__${product.id}__}">Delete or Upload image</a>
     </div>
     <div>
         <a href="#" data-toggle="modal" th:href="${'#exampleModalCenter'+product.id}">Delete homeStay</a>
