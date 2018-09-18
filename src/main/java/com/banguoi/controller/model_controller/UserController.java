@@ -27,6 +27,9 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
     private ProductService productService;
 
     @Autowired
@@ -142,44 +145,18 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/user/products/detail/{id}")
-    public ModelAndView detailProduct(@PathVariable("id") Long id) {
+    @GetMapping("/user/detailHomestay/{id}")
+    public ModelAndView displayDetailHomestay(@PathVariable("id") Long id) {
+        User user = userService.findUserByEmail(getPrincipal());
         Product product = productService.findById(id);
 
         if (product == null) {
-            return new ModelAndView("/accessDenied");
+            return new ModelAndView("accessDenied");
         }
 
-        ModelAndView modelAndView = new ModelAndView("/homestay/detail");
-        modelAndView.addObject("product", product);
-        return modelAndView;
-    }
-
-    @GetMapping("/users/update/{id}")
-    public ModelAndView showUpdateForm(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-
-        if (user == null) {
-            return new ModelAndView("/error.404");
-        }
-
-        ModelAndView modelAndView = new ModelAndView("/homestay/editUser");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
-
-    @PostMapping("/users/update")
-    public ModelAndView updateUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        new User().validate(user, bindingResult);
-
-        if (bindingResult.hasFieldErrors()) {
-            return new ModelAndView("/homestay/editUser");
-        }
-
-        userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("/homestay/editUser");
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "User updated successfully");
-        return modelAndView;
+        ModelAndView displayDetailHomestayModelAndView = new ModelAndView("/homestay/detail");
+        displayDetailHomestayModelAndView.addObject("product", product);
+        displayDetailHomestayModelAndView.addObject("user", user);
+        return displayDetailHomestayModelAndView;
     }
 }
