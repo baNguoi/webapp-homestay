@@ -18,7 +18,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,21 +145,9 @@ public class ProductController {
         return modelAndView;
     }
 
-    @GetMapping("products/delete/{id}")
-    public ModelAndView showFormRemoveProduct(@PathVariable("id") Long id) {
+    @PostMapping("/products/delete/{id}")
+    public String removeProduct(@PathVariable("id") Long id) {
         Product product = productService.findById(id);
-
-        if (product != null) {
-            ModelAndView modelAndView = new ModelAndView("/product/delete");
-            modelAndView.addObject("product", product);
-            return modelAndView;
-        } else {
-            return new ModelAndView("/error-404");
-        }
-    }
-
-    @PostMapping("/products/delete")
-    public String removeProduct(@ModelAttribute("product") Product product) {
         Iterable<Image> images = imageService.findAllByProduct(product);
 
         for (Image im : images) {
