@@ -10,7 +10,6 @@
     </th:block>
     <form action="#" th:action="@{/products/update}" th:object="${product}" method="post">
         <input type="hidden" th:field="*{id}"/>
-        <input th:each="im:${product.images}" type="hidden" th:value="${im.id}" name="file"/>
         <div class="form-group">
             <label for="inputname">Name</label>
             <input type="text" th:field="*{name}" class="form-control" id="inputname" placeholder="Name homestay">
