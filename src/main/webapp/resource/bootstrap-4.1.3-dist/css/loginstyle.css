@@ -83,3 +83,42 @@ form ul li a {
 .carousel-caption {
     padding-bottom: 500px;
 }
+
+/*Trang detail*/
+.viewImage{
+    width: 100%;
+    height: 60%;
+}
+.modal-dialog{
+    width: 100%;
+    height: 100%;
+    margin: 0px 0px 0px 0px;
+}
+
+@media {
+    .modal-dialog {
+        max-width: 100%;
+    }
+}
+
+.slideshowModal{
+    background: #1b1e21;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.rowSlideshow{
+    height: 100%;
+}
+
+.close{
+    color: white;
+}
+
+.detailHomestay{
+    margin-top:20px ;
+    padding-left: 0px;
+    font-size: 16px ;
+}
